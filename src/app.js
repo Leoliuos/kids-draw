@@ -11,7 +11,7 @@ export default class App extends React.Component {
         return (
             <div>
                 {" "}
-                <p>funny drawing app! v0.0</p>
+                <p>for parental control</p>
             </div>
         );
     }

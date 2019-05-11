@@ -82,6 +82,10 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
+app.get("/draw", (req, res) => {
+    res.sendFile(__dirname + "/canvas.html");
+});
+
 // * //// * //// * //// * //// * //// * //
 
 app.get("*", (req, res) => {
