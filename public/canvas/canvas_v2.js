@@ -1,7 +1,6 @@
 console.log("ready to go");
 
 const c = document.getElementById("drawboard");
-const but = document.getElementById("btnsend");
 
 const ctx = c.getContext("2d");
 
@@ -41,31 +40,46 @@ let ballpointshades = ballpointshadesblack;
 
 var mousecoordMoved = [0, 0];
 
+c.addEventListener("mousedown", function(event) {
+    touchFunction(event, event);
+});
 c.addEventListener("touchstart", function(event) {
     // preventing mouse event
     event.preventDefault();
+    touchFunction(event.changedTouches[0], event);
+});
+
+var touchFunction = function(touchevent, event) {
+    //var event = ;
     mousecoordMoved = [
-        event.changedTouches[0].clientX - event.currentTarget.offsetLeft,
-        event.changedTouches[0].clientY - event.currentTarget.offsetTop
+        touchevent.clientX - event.currentTarget.offsetLeft,
+        touchevent.clientY - event.currentTarget.offsetTop
     ];
     toggle = true;
     // clamping the pressure value to half to reduce too think lines in the middle :
     penpressure = 6;
-});
+};
 
+c.addEventListener("mouseup", function(event) {
+    releaseFunction(event, event);
+});
 c.addEventListener("touchend", function(event) {
     // preventing mouse event
     event.preventDefault();
+    releaseFunction(event.changedTouches[0], event);
+});
+
+var releaseFunction = function(touchevent, event) {
     if (
         Math.abs(
             Math.hypot(
                 Math.abs(
-                    event.changedTouches[0].clientX -
+                    touchevent.clientX -
                         event.currentTarget.offsetLeft -
                         mousecoordMoved[0]
                 ),
                 Math.abs(
-                    event.changedTouches[0].clientY -
+                    touchevent.clientY -
                         event.currentTarget.offsetTop -
                         mousecoordMoved[1]
                 )
@@ -83,8 +97,12 @@ c.addEventListener("touchend", function(event) {
     }
     toggle = false;
     coordlastframe = [0, 0];
-});
+};
 
+c.addEventListener("mouseleave", function(event) {
+    toggle = false;
+    coordlastframe = [0, 0];
+});
 c.addEventListener("touchcancel", function(event) {
     // preventing mouse event
     event.preventDefault();
@@ -92,14 +110,20 @@ c.addEventListener("touchcancel", function(event) {
     coordlastframe = [0, 0];
 });
 
+c.addEventListener("mousemove", function(event) {
+    moveFunction(event, event);
+});
 c.addEventListener("touchmove", function(event) {
     // preventing mouse event
     event.preventDefault();
-    console.log(event);
+    moveFunction(event.changedTouches[0], event);
+});
+
+var moveFunction = function(touchevent, event) {
     if (toggle) {
         mousecoord = [
-            event.changedTouches[0].clientX - event.currentTarget.offsetLeft,
-            event.changedTouches[0].clientY - event.currentTarget.offsetTop
+            touchevent.clientX - event.currentTarget.offsetLeft,
+            touchevent.clientY - event.currentTarget.offsetTop
         ];
         ctx.beginPath();
         if (coordlastframe[0] === 0 && coordlastframe[1] === 0) {
@@ -159,4 +183,4 @@ c.addEventListener("touchmove", function(event) {
     } else {
         toggle = false;
     }
-});
+};
