@@ -6,3 +6,11 @@ body {
     margin: 0;
     overflow: hidden;
 }
+
+h1 {
+    font-family: "Annie Use Your Telescope", cursive;
+}
+
+p {
+    font-family: "Roboto", sans-serif;
+}

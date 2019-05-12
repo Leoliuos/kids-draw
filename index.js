@@ -82,6 +82,14 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
+app.get("/login", (req, res) => {
+    if (req.session.userId) {
+        res.redirect("/");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
+});
+
 app.get("/draw", (req, res) => {
     res.sendFile(__dirname + "/canvas.html");
 });

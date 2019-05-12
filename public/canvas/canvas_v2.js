@@ -3,6 +3,14 @@ console.log("ready to go");
 const c = document.getElementById("drawboard");
 
 const ctx = c.getContext("2d");
+ctx.canvas.width = Math.min(document.body.clientWidth * 0.8, 1754);
+ctx.canvas.height = Math.min(document.body.clientWidth * 0.8 * 0.7, 1240);
+
+//ctx.canvas.width = window.innerWidth * 0.9;
+//ctx.canvas.height = window.innerHeight * 0.9;
+
+//ctx.canvas.width = window.screen.width * 0.9;
+//ctx.canvas.height = window.screen.height * 0.9;
 
 let toggle = false;
 
@@ -36,7 +44,30 @@ const ballpointshadesblack = [
     "#B0B0B0"
 ];
 
-let ballpointshades = ballpointshadesblack;
+// these are shades for red ballpoint pen
+const ballpointshadesred = [
+    "#ff2819",
+    "#f22a1d",
+    "#f23326",
+    "#f2453a",
+    "#f25248",
+    "#ef5f56",
+    "#ed7068",
+    "#ef837c"
+];
+// these are shades for green ballpoint pen
+const ballpointshadesgreen = [
+    "#00d60d",
+    "#06d813",
+    "#0ddd1a",
+    "#16e223",
+    "#24e531",
+    "#34e540",
+    "#4ce857",
+    "#61ed6b"
+];
+
+let ballpointshades = ballpointshadesgreen;
 
 var mousecoordMoved = [0, 0];
 
@@ -90,7 +121,7 @@ var releaseFunction = function(touchevent, event) {
         ctx.beginPath();
         ctx.moveTo(mousecoordMoved[0], mousecoordMoved[1]);
         ctx.lineTo(mousecoordMoved[0] + 1, mousecoordMoved[1] + 1);
-        ctx.strokeStyle = "royalblue";
+        ctx.strokeStyle = ballpointshades[0];
         ctx.lineCap = "round";
         ctx.lineWidth = 3.5;
         ctx.stroke();

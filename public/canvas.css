@@ -5,4 +5,12 @@
 body {
     margin: 0;
     overflow: hidden;
+    background-color: grey;
+}
+
+canvas {
+    border: 1px solid black;
+    margin-top: 5vh;
+    margin-left: 10vw;
+    background-color: white;
 }
