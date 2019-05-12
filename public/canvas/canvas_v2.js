@@ -2,15 +2,15 @@ console.log("ready to go");
 
 const c = document.getElementById("drawboard");
 
+const audio = document.getElementById("music");
+
+audio.play();
+
 const ctx = c.getContext("2d");
 ctx.canvas.width = Math.min(document.body.clientWidth * 0.8, 1754);
 ctx.canvas.height = Math.min(document.body.clientWidth * 0.8 * 0.7, 1240);
-
-//ctx.canvas.width = window.innerWidth * 0.9;
-//ctx.canvas.height = window.innerHeight * 0.9;
-
-//ctx.canvas.width = window.screen.width * 0.9;
-//ctx.canvas.height = window.screen.height * 0.9;
+c.style.marginLeft = document.body.clientWidth * 0.1 + "px";
+c.style.marginTop = document.body.clientWidth * 0.025 + "px";
 
 let toggle = false;
 
