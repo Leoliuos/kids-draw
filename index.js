@@ -100,7 +100,7 @@ app.get("*", (req, res) => {
     res.redirect("/");
 });
 
-server.listen(8080, function() {
+server.listen(process.env.PORT || 8080, function() {
     console.log("Kids-Draw");
 });
 

@@ -2,10 +2,6 @@ console.log("ready to go");
 
 const c = document.getElementById("drawboard");
 
-const audio = document.getElementById("music");
-
-audio.play();
-
 const ctx = c.getContext("2d");
 ctx.canvas.width = Math.min(document.body.clientWidth * 0.8, 1754);
 ctx.canvas.height = Math.min(document.body.clientWidth * 0.8 * 0.7, 1240);
