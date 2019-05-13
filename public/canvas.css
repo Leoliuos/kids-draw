@@ -4,14 +4,23 @@
 
 body {
     margin: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
     background-color: white;
     width: 100vw;
     height: 100vh;
 }
 
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+}
+
 canvas {
-    border: 1px solid black;
+    border: 1px solid green;
     background-color: white;
     z-index: 1;
 }
@@ -23,7 +32,7 @@ footer {
     background-color: green;
     width: 100vw;
     text-align: center;
-    color: lime;
+    color: greenyellow;
 }
 
 #bg {
