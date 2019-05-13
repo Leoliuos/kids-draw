@@ -6,27 +6,37 @@
         <title>Kids Draw - Let's Draw !</title>
     </head>
     <body>
-        <div class="noselect">
-            <audio
-                id="music"
-                loop
-                src="/sounds/audio_hero_Merry-Go-Round_SIPML_Q-0145.mp3"
-                type="audio/mpeg"
-            ></audio>
-            <canvas width="1754px" height="1240px" id="drawboard"></canvas>
-            <img src="/images/background_forest.jpg" id="bg" />
-            <img src="/images/" id="bottom_alt" />
-            <img src="/images/" id="bottom" />
-            <img src="/images/" id="bottomleft_alt" />
-            <img src="/images/" id="bottomleft" />
-            <img src="/images/" id="bottomright_alt" />
-            <img src="/images/" id="bottomright" />
-            <img src="/images/" id="fly" />
-            <img src="/images/" id="topright" />
-            <img src="/images/" id="walker_alt" />
-            <img src="/images/" id="walker" />
+        <div id="tabletbody">
+            <div class="noselect">
+                <audio
+                    id="music"
+                    loop
+                    src="/sounds/audio_hero_Merry-Go-Round_SIPML_Q-0145.mp3"
+                    type="audio/mpeg"
+                ></audio>
+                <canvas width="1754px" height="1240px" id="drawboard"></canvas>
+                <img src="/images/background_forest.jpg" id="bg" />
+                <img src="/images/" id="bottom_alt" />
+                <img src="/images/" id="bottom" />
+                <img src="/images/" id="bottomleft_alt" />
+                <img src="/images/" id="bottomleft" />
+                <img src="/images/" id="bottomright_alt" />
+                <img src="/images/" id="bottomright" />
+                <img src="/images/" id="fly" />
+                <img src="/images/" id="topright" />
+                <img src="/images/" id="walker_alt" />
+                <img src="/images/" id="walker" />
+            </div>
+            <div id="pens">
+                <img
+                    src="/images/tools/penselect.png"
+                    id="penhilit"
+                    height="210px"
+                />
+                <img src="/images/tools/pens.png" id="pen" height="200px" />
+            </div>
+            <footer>Sound effects and music obtained from zapsplat.com</footer>
         </div>
-        <footer>Sound effects and music obtained from zapsplat.com</footer>
         <script src="/canvas/canvas_v2.js"></script>
         <script src="/canvas/animalfriends.js"></script>
     </body>

@@ -78,9 +78,15 @@ if (process.env.NODE_ENV != "production") {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/index.html");
+app.get("/welcome", (req, res) => {
+    if (req.session.userId) {
+        res.redirect("/");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
 });
+
+// LOGIN //// LOGIN //// LOGIN //// LOGIN //
 
 app.get("/login", (req, res) => {
     if (req.session.userId) {
@@ -90,14 +96,94 @@ app.get("/login", (req, res) => {
     }
 });
 
+app.post("/login", async (req, res) => {
+    if (req.session.userId) {
+        res.redirect("/");
+    } else {
+        try {
+            const logindata = await db.queryLogin(req.body.email);
+            if (!logindata.rows[0]) {
+                throw "no results for email";
+            }
+            if (!req.body.passw) {
+                throw "no password from user";
+            }
+            const passw = logindata.rows[0].password;
+            const checkpass = bc.checkPassword(req.body.passw, passw);
+            const loginId = db.queryLoginID(req.body.email);
+            const returnpromises = {
+                checkpassProm: await checkpass,
+                checkloginProm: await loginId
+            };
+            if (!returnpromises.checkpassProm) {
+                throw "wrong password";
+            }
+            req.session.userId = returnpromises.checkloginProm.rows[0].id;
+            res.send("success");
+        } catch (err) {
+            res.status(500).send("fail");
+        }
+    }
+});
+
+// REGISTER //// REGISTER //// REGISTER //
+
+app.get("/register", (req, res) => {
+    if (req.session.userId) {
+        res.redirect("/");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
+});
+
+app.post("/register", async (req, res) => {
+    if (req.session.userId) {
+        res.redirect("/");
+    } else {
+        try {
+            if (
+                !req.body.first ||
+                !req.body.last ||
+                !req.body.email ||
+                !req.body.passw
+            ) {
+                throw "empty input field(s)";
+            }
+            const passw = await bc.hashPassword(req.body.passw);
+            const returnid = await db.createUser(
+                req.body.first,
+                req.body.last,
+                req.body.email,
+                passw
+            );
+            if (!returnid.rows[0].id) {
+                throw "createUser not successfull";
+            }
+            req.session.userId = returnid.rows[0].id;
+            res.send("success");
+        } catch (err) {
+            res.status(500).send("fail");
+        }
+    }
+});
+
 app.get("/draw", (req, res) => {
     res.sendFile(__dirname + "/canvas.html");
+});
+
+app.get("/logout", (req, res) => {
+    req.session.userId = undefined;
+    res.redirect("/welcome");
 });
 
 // * //// * //// * //// * //// * //// * //
 
 app.get("*", (req, res) => {
-    res.redirect("/");
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
 });
 
 server.listen(process.env.PORT || 8080, function() {

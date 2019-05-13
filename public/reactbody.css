@@ -4,13 +4,121 @@
 
 body {
     margin: 0;
-    overflow: hidden;
+    background-image: linear-gradient(PaleGreen, white);
+    background-size: cover;
+    height: 120vh;
+}
+
+.welcomebox {
+    background-color: PaleGreen;
+    width: 60vw;
+    margin-left: calc((100% - 60vw) / 2);
+    height: 105vh;
+    border-style: solid;
+    border-width: 1px;
+    border-color: green white green white;
+    border-radius: 1vw;
+}
+
+.siteinfo {
+    width: 50vw;
+    height: auto;
+    border: 1px solid black;
+    padding: 2vw;
+    margin-left: calc((100% - 50vw) / 2);
+    border-style: solid;
+    border-width: 1px;
+    border-color: green white green white;
+    border-radius: 1vw;
+}
+
+a {
+    color: purple;
+    font-family: "Annie Use Your Telescope", cursive;
+    text-decoration: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 2em;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.infotext {
+    text-align: center;
+}
+
+.errortext {
+    color: red;
+}
+
+.welcomeselectbox {
+    display: inline-block;
+    width: 40%;
+    margin-left: 10%;
+    float: left;
+}
+
+.databox {
+    display: inline-block;
+    width: 40%;
+    margin-right: 10%;
+    margin-top: 5%;
+    float: right;
+    height: auto;
+    text-align: right;
+}
+
+input {
+    margin-left: 5px;
+    width: 150px;
+    height: 20px;
+}
+
+button {
+    width: 150px;
+    height: 20px;
+    color: white;
+    background-color: purple;
 }
 
 h1 {
     font-family: "Annie Use Your Telescope", cursive;
+    font-size: 4em;
+    text-align: center;
+    width: 100%;
+    background-color: purple;
+    color: white;
 }
 
 p {
     font-family: "Roboto", sans-serif;
+    font-size: 1em;
+}
+.yellowLine {
+    width: 100vw;
+    height: 5vw;
+    background-color: yellow;
+    position: absolute;
+    top: 0;
+    z-index: -100;
+}
+
+.blueLine {
+    width: 100vw;
+    height: 5vw;
+    background-color: lightblue;
+    position: absolute;
+    top: 10vw;
+    z-index: -100;
+}
+
+.orangeLine {
+    width: 100vw;
+    height: 5vw;
+    background-color: orange;
+    position: absolute;
+    top: 20vw;
+    z-index: -100;
 }

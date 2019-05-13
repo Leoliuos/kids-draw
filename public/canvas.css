@@ -4,10 +4,37 @@
 
 body {
     margin: 0;
-    /*overflow: hidden;*/
     background-color: white;
     width: 100vw;
     height: 100vh;
+}
+
+#tabletbody {
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+}
+
+#pens {
+    position: absolute;
+    top: 1vw;
+    right: 5vw;
+    z-index: 3;
+}
+
+#pen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 3;
+}
+
+#penhilit {
+    position: absolute;
+    left: -7.5px;
+    top: 0;
+    z-index: 2;
 }
 
 .noselect {
@@ -22,7 +49,6 @@ body {
 canvas {
     border: 1px solid green;
     background-color: white;
-    z-index: 1;
 }
 
 footer {
@@ -41,7 +67,7 @@ footer {
     height: 100vh;
     left: 0;
     top: 0;
-    z-index: -1;
+    z-index: -1000;
 }
 
 #bottomleft.destination {
