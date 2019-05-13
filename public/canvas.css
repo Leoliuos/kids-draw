@@ -43,3 +43,147 @@ footer {
     top: 0;
     z-index: -1;
 }
+
+#bottomleft.destination {
+    position: absolute;
+    left: 0;
+    bottom: 2vw;
+    transition: left 1.5s;
+    transition-timing-function: ease;
+}
+
+#bottomleft_alt.destination {
+    position: absolute;
+    left: 0;
+    bottom: 2vw;
+    transition: left 1.5s;
+    transition-timing-function: ease;
+}
+
+#bottom_alt.destination {
+    position: absolute;
+    left: 50vw;
+    bottom: 2vw;
+    transition: bottom 1.5s;
+    transition-timing-function: ease;
+}
+
+#bottom.destination {
+    position: absolute;
+    left: 50vw;
+    bottom: 2vw;
+    transition: bottom 1.5s;
+    transition-timing-function: ease;
+}
+
+#bottomright.destination {
+    position: absolute;
+    right: 0;
+    bottom: 2vw;
+    transition: right 1.5s;
+    transition-timing-function: ease;
+}
+
+#bottomright_alt.destination {
+    position: absolute;
+    right: 0;
+    bottom: 2vw;
+    transition: right 1.5s;
+    transition-timing-function: ease;
+}
+
+#topright.destination {
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: right 1.5s;
+    transition-timing-function: ease;
+}
+
+#walker.destination {
+    position: absolute;
+    right: 110vw;
+    bottom: 1.9vw;
+    transition: right 10s;
+}
+
+#walker_alt.destination {
+    position: absolute;
+    right: 110vw;
+    bottom: 1.9vw;
+    transition: right 10s;
+}
+
+#fly.destination {
+    position: absolute;
+    right: 110vw;
+    bottom: 25vw;
+    transition: right bottom 10s;
+}
+
+#bottomleft {
+    position: absolute;
+    left: -25vw;
+    bottom: 2vw;
+    transition: left 1.5s;
+}
+
+#bottomleft_alt {
+    position: absolute;
+    left: -25vw;
+    bottom: 2vw;
+    transition: left 1.5s;
+}
+
+#bottom_alt {
+    position: absolute;
+    left: 50vw;
+    bottom: -25vw;
+    transition: bottom 1.5s;
+}
+
+#bottom {
+    position: absolute;
+    left: 50vw;
+    bottom: -25vw;
+    transition: bottom 1.5s;
+}
+
+#bottomright {
+    position: absolute;
+    right: -25vw;
+    bottom: 2vw;
+    transition: right 1.5s;
+}
+
+#bottomright_alt {
+    position: absolute;
+    right: -25vw;
+    bottom: 2vw;
+    transition: right 1.5s;
+}
+
+#topright {
+    position: absolute;
+    right: -25vw;
+    top: 0;
+    transition: right 1.5s;
+}
+
+#walker {
+    position: absolute;
+    right: -20vw;
+    bottom: 1.9vw;
+}
+
+#walker_alt {
+    position: absolute;
+    right: -20vw;
+    bottom: 1.9vw;
+}
+
+#fly {
+    position: absolute;
+    right: 25vw;
+    bottom: -6vw;
+}
