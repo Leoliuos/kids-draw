@@ -118,6 +118,9 @@ app.post("/login", async (req, res) => {
             if (!returnpromises.checkpassProm) {
                 throw "wrong password";
             }
+            if (!returnpromises.checkloginProm) {
+                throw "no id";
+            }
             req.session.userId = returnpromises.checkloginProm.rows[0].id;
             res.send("success");
         } catch (err) {
@@ -173,6 +176,7 @@ app.post("/register", async (req, res) => {
             );
             req.session.userId = returnid.rows[0].id;
             req.session.subuserId = masteruser.rows[0].id;
+            req.session.subuserType = 1;
             res.send("success");
         } catch (err) {
             res.status(500).send("fail");
@@ -185,12 +189,22 @@ app.get("/subusers", async (req, res) => {
         res.redirect("/welcome");
     } else {
         try {
-            const data = {};
+            const data = [];
             const subuserdata = await db.getsubusers(req.session.userId);
-            console.log(subuserdata.rows);
-            res.send(subuserdata.rows);
+            for (var o = 0; o < subuserdata.rows.length; o++) {
+                let passwordtrue = false;
+                if (!!subuserdata.rows[o]) {
+                    passwordtrue = true;
+                }
+                data.push({
+                    firstname: subuserdata.rows[o].firstname,
+                    password: passwordtrue,
+                    id: subuserdata.rows[o].id,
+                    type: subuserdata.rows[o].type
+                });
+            }
+            res.send(data);
         } catch (err) {
-            console.log(err);
             res.status(500).send("server error");
         }
     }
@@ -218,9 +232,39 @@ app.post("/register/subuser", async (req, res) => {
             if (!returnid.rows[0].id) {
                 throw "createUser not successfull";
             }
-            req.session.subuserId = returnid.rows[0].id;
             res.send("success");
         } catch (err) {
+            res.status(500).send("fail");
+        }
+    }
+});
+
+app.post("/sublogin", async (req, res) => {
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else {
+        try {
+            if (!req.body.id) {
+                throw "user is trying something weird";
+            }
+            const subid = req.body.id.split("_")[1];
+            const querysub = await db.getsubuser(subid);
+            if (querysub.rows[0].password == null) {
+                req.session.subuserId = subid;
+                res.send("success");
+            } else {
+                const passw = querysub.rows[0].password;
+                const checkpass = await bc.checkPassword(req.body.passw, passw);
+                if (checkpass === true) {
+                    req.session.subuserType = querysub.rows[0].type;
+                    req.session.subuserId = subid;
+                    res.send("success");
+                } else {
+                    throw "wrong password";
+                }
+            }
+        } catch (err) {
+            console.log(err);
             res.status(500).send("fail");
         }
     }
@@ -232,7 +276,9 @@ app.get("/draw", (req, res) => {
 
 app.get("/logout", (req, res) => {
     req.session.userId = undefined;
-    res.redirect("/welcome");
+    req.session.subuserId = undefined;
+    req.session.subuserType = undefined;
+    res.sendFile(__dirname + "/index.html");
 });
 
 // * //// * //// * //// * //// * //// * //

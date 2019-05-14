@@ -1,12 +1,49 @@
 import React from "react";
+import axios from "./axios";
 
 import { connect } from "react-redux";
 
 import { getSubUsers } from "./actions";
 
 class Subusers extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { id: null, passw: null };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleInput = this.handleInput.bind(this);
+    }
     componentDidMount() {
         this.props.dispatch(getSubUsers());
+    }
+    handleInput(e) {
+        e.preventDefault();
+        if (!!this.state.passw) {
+            axios
+                .post("/sublogin", {
+                    id: e.target.id,
+                    passw: this.state.passw
+                })
+                .then(() => {
+                    location.replace("/");
+                })
+                .catch(() => {
+                    this.setState({ error: "error" });
+                });
+        } else {
+            axios
+                .post("/sublogin", {
+                    id: e.target.id
+                })
+                .then(() => {
+                    location.replace("/");
+                })
+                .catch(() => {
+                    this.setState({ error: "error" });
+                });
+        }
+    }
+    handleChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
     }
     render() {
         const { subUsers } = this.props;
@@ -15,14 +52,37 @@ class Subusers extends React.Component {
         }
         const subuserlist = (
             <div>
-                {subUsers
-                    .filter(user => !user.accepted)
-                    .map((user, index) => (
-                        <div className="user" key={user.id}>
-                            {user.first}
-                            <div>test result</div>
-                        </div>
-                    ))}
+                {this.state.error && (
+                    <div className="errortext">Something went wrong!</div>
+                )}
+                {subUsers.map((user, index) => (
+                    <div className="userbox" key={user.id}>
+                        <form
+                            id={"id_" + user.id}
+                            onSubmit={e => this.handleInput(e)}
+                        >
+                            <label htmlFor={"login-user-" + user.id}>
+                                <div className="user">{user.firstname}</div>
+                            </label>
+                            {user.password && (
+                                <div>
+                                    <input
+                                        type="password"
+                                        autoComplete="true"
+                                        name="passw"
+                                        onChange={e => this.handleChange(e)}
+                                    />
+                                </div>
+                            )}
+                            <button
+                                id={"login-user-" + user.id}
+                                style={{ display: "none" }}
+                            >
+                                Send
+                            </button>
+                        </form>
+                    </div>
+                ))}
             </div>
         );
         return <div>{!!subUsers.length && subuserlist}</div>;
@@ -31,7 +91,7 @@ class Subusers extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        users: state.subUsers && state.subUsers
+        subUsers: state.subUsers && state.subUsers
     };
 }
 

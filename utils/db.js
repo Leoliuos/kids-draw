@@ -16,6 +16,24 @@ exports.createsubUser = function createsubUser(first, passw, type, userid) {
     return db.query(q, params);
 };
 
+exports.queryLogin = function queryLogin(email) {
+    let q = `SELECT password,id FROM users WHERE lower(email) = lower($1)`;
+    let params = [email];
+    return db.query(q, params);
+};
+
+exports.queryLoginID = function queryLoginID(email) {
+    let q = `SELECT id FROM users WHERE lower(email) = lower($1)`;
+    let params = [email];
+    return db.query(q, params);
+};
+
+exports.querysubLogin = function querysubLogin(id) {
+    let q = `SELECT password,id FROM users WHERE id = $1`;
+    let params = [id];
+    return db.query(q, id);
+};
+
 exports.getusername = function getusername(id) {
     let q = `SELECT firstname FROM users WHERE id=$1`;
     let params = [id];
@@ -24,6 +42,12 @@ exports.getusername = function getusername(id) {
 
 exports.getsubusers = function getsubusers(id) {
     let q = `SELECT firstname, password, type, id FROM subusers WHERE userid=$1`;
+    let params = [id];
+    return db.query(q, params);
+};
+
+exports.getsubuser = function getsubuser(id) {
+    let q = `SELECT firstname, password, type, id FROM subusers WHERE id=$1`;
     let params = [id];
     return db.query(q, params);
 };

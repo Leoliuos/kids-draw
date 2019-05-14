@@ -83,10 +83,12 @@ export default class Welcome extends React.Component {
                         >
                             <p>
                                 Password is used for all Family members to sign
-                                in to the site. However DO NOT use an easy
-                                password! Instead use <i>remember passwords</i>{" "}
-                                for devices children are using or keep the
-                                devices logged in.
+                                in to the site.
+                            </p>
+                            <p>However DO NOT use an easy password!</p>
+                            <p>
+                                Instead use <i>remember passwords</i> for
+                                devices or keep the devices logged in.
                             </p>
                             <p>
                                 Master Password is your main user password which
