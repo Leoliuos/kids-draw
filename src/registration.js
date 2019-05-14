@@ -12,7 +12,8 @@ export default class Registration extends React.Component {
                 first: this.state.first,
                 last: this.state.last,
                 email: this.state.email,
-                passw: this.state.passw
+                passw: this.state.passw,
+                masterpassw: this.state.masterpassw
             })
             .then(() => {
                 location.replace("/");
@@ -40,10 +41,6 @@ export default class Registration extends React.Component {
                         <input name="last" onChange={handleInput} />
                     </p>
                     <p>
-                        City
-                        <input name="city" onChange={handleInput} />
-                    </p>
-                    <p>
                         Email
                         <input name="email" onChange={handleInput} />
                     </p>
@@ -51,6 +48,14 @@ export default class Registration extends React.Component {
                         Password
                         <input
                             name="passw"
+                            onChange={handleInput}
+                            type="password"
+                        />
+                    </p>
+                    <p>
+                        Master Password
+                        <input
+                            name="masterpassw"
                             onChange={handleInput}
                             type="password"
                         />

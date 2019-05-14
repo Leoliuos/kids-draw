@@ -7,3 +7,13 @@ CREATE TABLE users(
     email VARCHAR(250) UNIQUE NOT NULL,
     password VARCHAR(60) NOT NULL
 );
+
+DROP TABLE IF EXISTS subusers;
+
+CREATE TABLE subusers(
+    id SERIAL PRIMARY KEY,
+    firstname VARCHAR(250) NOT NULL,
+    password VARCHAR(60),
+    type INTEGER,
+    userid INTEGER REFERENCES users(id) NOT NULL
+);

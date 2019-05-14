@@ -145,21 +145,80 @@ app.post("/register", async (req, res) => {
                 !req.body.first ||
                 !req.body.last ||
                 !req.body.email ||
-                !req.body.passw
+                !req.body.passw ||
+                !req.body.masterpassw
             ) {
                 throw "empty input field(s)";
             }
-            const passw = await bc.hashPassword(req.body.passw);
+            const passw = bc.hashPassword(req.body.passw);
+            const masterpassw = bc.hashPassword(req.body.masterpassw);
+            const returnpromises = {
+                passProm: await passw,
+                masterProm: await masterpassw
+            };
             const returnid = await db.createUser(
                 req.body.first,
                 req.body.last,
                 req.body.email,
-                passw
+                returnpromises.passProm
             );
             if (!returnid.rows[0].id) {
                 throw "createUser not successfull";
             }
+            const masteruser = await db.createsubUser(
+                req.body.first,
+                returnpromises.masterProm,
+                1,
+                returnid.rows[0].id
+            );
             req.session.userId = returnid.rows[0].id;
+            req.session.subuserId = masteruser.rows[0].id;
+            res.send("success");
+        } catch (err) {
+            res.status(500).send("fail");
+        }
+    }
+});
+
+app.get("/subusers", async (req, res) => {
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else {
+        try {
+            const data = {};
+            const subuserdata = await db.getsubusers(req.session.userId);
+            console.log(subuserdata.rows);
+            res.send(subuserdata.rows);
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("server error");
+        }
+    }
+});
+
+app.post("/register/subuser", async (req, res) => {
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else {
+        try {
+            if (!req.body.first) {
+                throw "empty input field";
+            }
+            let password = null;
+            if (!!req.body.passw) {
+                const passw = await bc.hashPassword(req.body.passw);
+                password = passw;
+            }
+            const returnid = await db.createsubUser(
+                req.body.first,
+                password,
+                req.body.adult,
+                req.session.userId
+            );
+            if (!returnid.rows[0].id) {
+                throw "createUser not successfull";
+            }
+            req.session.subuserId = returnid.rows[0].id;
             res.send("success");
         } catch (err) {
             res.status(500).send("fail");

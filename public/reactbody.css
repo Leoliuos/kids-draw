@@ -13,7 +13,7 @@ body {
     background-color: PaleGreen;
     width: 60vw;
     margin-left: calc((100% - 60vw) / 2);
-    height: 105vh;
+    height: auto;
     border-style: solid;
     border-width: 1px;
     border-color: green white green white;
@@ -30,6 +30,8 @@ body {
     border-width: 1px;
     border-color: green white green white;
     border-radius: 1vw;
+    text-align: left;
+    clear: both;
 }
 
 a {
@@ -65,6 +67,7 @@ a:hover {
     width: 40%;
     margin-right: 10%;
     margin-top: 5%;
+    margin-bottom: 5%;
     float: right;
     height: auto;
     text-align: right;

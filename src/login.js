@@ -27,8 +27,7 @@ export default class Login extends React.Component {
             <div className="databox">
                 {this.state.error && (
                     <div className="errortext">
-                        Something went wrong! Did you give a valid email and
-                        password?
+                        Did you give a valid email and password?
                     </div>
                 )}
                 <div>
