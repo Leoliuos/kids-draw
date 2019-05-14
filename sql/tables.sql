@@ -15,5 +15,6 @@ CREATE TABLE subusers(
     firstname VARCHAR(250) NOT NULL,
     password VARCHAR(60),
     type INTEGER,
+    icon INTEGER,
     userid INTEGER REFERENCES users(id) NOT NULL
 );

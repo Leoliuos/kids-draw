@@ -3,7 +3,7 @@ import axios from "./axios";
 
 import { connect } from "react-redux";
 
-import { getSubUsers } from "./actions";
+import { getSubUsers, changeuserType } from "./actions";
 
 class Subusers extends React.Component {
     constructor(props) {
@@ -23,10 +23,13 @@ class Subusers extends React.Component {
                     id: e.target.id,
                     passw: this.state.passw
                 })
-                .then(() => {
-                    location.replace("/");
+                .then(resp => {
+                    this.props.dispatch(
+                        changeuserType([{ userType: resp.data.type }])
+                    );
                 })
-                .catch(() => {
+                .catch(err => {
+                    console.log(err);
                     this.setState({ error: "error" });
                 });
         } else {

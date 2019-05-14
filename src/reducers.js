@@ -6,5 +6,14 @@ export default function(state = {}, action) {
         };
     }
 
+    if (action.type == "SET_SUBTYPE") {
+        state = {
+            ...state,
+            userType: action.userType.map(user => {
+                return user;
+            })
+        };
+    }
+
     return state;
 }

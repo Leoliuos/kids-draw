@@ -8,3 +8,10 @@ export async function getSubUsers() {
         subUsers: data
     };
 }
+
+export async function changeuserType(data) {
+    return {
+        type: "SET_SUBTYPE",
+        userType: data
+    };
+}

@@ -258,7 +258,7 @@ app.post("/sublogin", async (req, res) => {
                 if (checkpass === true) {
                     req.session.subuserType = querysub.rows[0].type;
                     req.session.subuserId = subid;
-                    res.send("success");
+                    res.send({ type: querysub.rows[0].type });
                 } else {
                     throw "wrong password";
                 }
@@ -278,7 +278,7 @@ app.get("/logout", (req, res) => {
     req.session.userId = undefined;
     req.session.subuserId = undefined;
     req.session.subuserType = undefined;
-    res.sendFile(__dirname + "/index.html");
+    res.redirect("/welcome");
 });
 
 // * //// * //// * //// * //// * //// * //
