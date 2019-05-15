@@ -15,3 +15,10 @@ export async function changeuserType(data) {
         userType: data
     };
 }
+
+export async function addnewSubUser(data) {
+    return {
+        type: "ADD_SUBUSER",
+        subUsers: data
+    };
+}

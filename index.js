@@ -192,8 +192,8 @@ app.get("/subusers", async (req, res) => {
             const data = [];
             const subuserdata = await db.getsubusers(req.session.userId);
             for (var o = 0; o < subuserdata.rows.length; o++) {
-                let passwordtrue = false;
-                if (!!subuserdata.rows[o]) {
+                let passwordtrue = null;
+                if (!!subuserdata.rows[o].password) {
                     passwordtrue = true;
                 }
                 data.push({
@@ -210,13 +210,17 @@ app.get("/subusers", async (req, res) => {
     }
 });
 
-app.post("/register/subuser", async (req, res) => {
+app.post("/subregister", async (req, res) => {
     if (!req.session.userId) {
         res.redirect("/welcome");
     } else {
         try {
             if (!req.body.first) {
                 throw "empty input field";
+            }
+            let type = 3;
+            if (req.body.adult) {
+                type = 2;
             }
             let password = null;
             if (!!req.body.passw) {
@@ -226,14 +230,21 @@ app.post("/register/subuser", async (req, res) => {
             const returnid = await db.createsubUser(
                 req.body.first,
                 password,
-                req.body.adult,
+                type,
                 req.session.userId
             );
             if (!returnid.rows[0].id) {
                 throw "createUser not successfull";
             }
-            res.send("success");
+            const data = {
+                firstname: req.body.first,
+                password: password,
+                id: returnid.rows[0].id,
+                type: returnid.rows[0].type
+            };
+            res.send(data);
         } catch (err) {
+            console.log(err);
             res.status(500).send("fail");
         }
     }

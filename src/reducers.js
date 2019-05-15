@@ -15,5 +15,12 @@ export default function(state = {}, action) {
         };
     }
 
+    if (action.type == "ADD_SUBUSER") {
+        state = {
+            ...state,
+            subUsers: state.subUsers.concat(action.user)
+        };
+    }
+
     return state;
 }
