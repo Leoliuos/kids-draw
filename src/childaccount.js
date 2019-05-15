@@ -1,7 +1,6 @@
 import React from "react";
-import axios from "./axios";
 
-export default class Master extends React.Component {
+export default class World extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};

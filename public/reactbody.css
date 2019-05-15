@@ -95,6 +95,57 @@ a:hover {
     margin: 1vw;
 }
 
+.subuserboxC {
+    width: 250px;
+    height: auto;
+    background-color: PaleGreen;
+    border-style: solid;
+    border-width: 1px;
+    border-color: green white green white;
+    border-radius: 1vw;
+    display: inline-block;
+    float: right;
+    padding-left: 50px;
+    padding-bottom: 25px;
+    margin: 5vw;
+}
+
+.subuserboxL {
+    width: 250px;
+    height: auto;
+    background-color: PaleGreen;
+    border-style: solid;
+    border-width: 1px;
+    border-color: green white green white;
+    border-radius: 1vw;
+    display: inline-block;
+    float: center;
+    padding-left: 50px;
+    padding-bottom: 25px;
+    margin: 5vw;
+}
+
+.subuserboxE {
+    width: 250px;
+    height: auto;
+    background-color: PaleGreen;
+    border-style: solid;
+    border-width: 1px;
+    border-color: green white green white;
+    border-radius: 1vw;
+    display: inline-block;
+    float: left;
+    padding-left: 50px;
+    padding-bottom: 25px;
+    margin: 5vw;
+}
+
+.createsubuser {
+    width: 150px;
+    height: auto;
+    text-align: left;
+}
+
 input {
     width: 150px;
     height: 20px;

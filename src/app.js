@@ -3,13 +3,11 @@ import ReactDOM from "react-dom";
 import axios from "./axios";
 import Subusers from "./sublogin";
 
-import Master from "./_masteraccount";
-import Parent from "./_parentaccount";
-import World from "./_childaccount";
+import Master from "./masteraccount";
+import Parent from "./parentaccount";
+import World from "./childaccount";
 
 import { connect } from "react-redux";
-
-import { BrowserRouter, Route, Link } from "react-router-dom";
 
 class App extends React.Component {
     constructor(props) {
