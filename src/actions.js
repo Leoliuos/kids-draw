@@ -19,7 +19,7 @@ export async function changeuserType(data) {
 export async function addnewSubUser(data) {
     return {
         type: "ADD_SUBUSER",
-        subUsers: data
+        user: data
     };
 }
 

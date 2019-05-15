@@ -30,11 +30,10 @@ class Settings extends React.Component {
                     adult: this.state.adult
                 })
                 .then(data => {
-                    this.props.dispatch(addnewSubUser(data));
+                    this.props.dispatch(addnewSubUser([data.data]));
                 })
                 .catch(err => {
-                    console.log(err);
-                    this.setState({ error: "error" });
+                    this.setState({ error: err });
                 });
         } else {
             axios
@@ -43,10 +42,10 @@ class Settings extends React.Component {
                     adult: this.state.adult
                 })
                 .then(data => {
-                    this.props.dispatch(addnewSubUser(data));
+                    this.props.dispatch(addnewSubUser([data.data]));
                 })
-                .catch(() => {
-                    this.setState({ error: "error" });
+                .catch(err => {
+                    this.setState({ error: err });
                 });
         }
     }
@@ -62,8 +61,13 @@ class Settings extends React.Component {
                     delete: this.state.delete
                 })
                 .then(data => {
-                    this.props.dispatch(getSubUsers());
-                    this.setState({ userselected: 0 });
+                    if (!data.deleted) {
+                        this.props.dispatch(getSubUsers());
+                        this.setState({ userselected: 0 });
+                    } else {
+                        this.props.dispatch(deleteSubUser(data));
+                        this.setState({ userselected: 0 });
+                    }
                 })
                 .catch(err => {
                     console.log(err);
@@ -100,6 +104,7 @@ class Settings extends React.Component {
     changeSelection(id, name) {
         this.setState({ userselected: id });
         this.setState({ editname: name });
+        this.setState({ error: null });
     }
     handleChangeEdit(e) {
         if (e.target.name != "delete") {
@@ -112,7 +117,12 @@ class Settings extends React.Component {
         const { subUsers } = this.props;
         return (
             <div>
-                {this.state.delete}
+                {this.state.error && (
+                    <div className="errortext">
+                        Something went wrong! You must use unique names for each
+                        user.
+                    </div>
+                )}
                 <div className="subuserboxC">
                     <form onSubmit={e => this.handleInput(e)}>
                         <div className="createsubuser">

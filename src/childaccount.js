@@ -5,7 +5,8 @@ export default class World extends React.Component {
         super(props);
         this.state = {};
     }
+    componentDidMount() {}
     render() {
-        return <div className="databox">hello wolrd</div>;
+        return <div>hello wolrd</div>;
     }
 }

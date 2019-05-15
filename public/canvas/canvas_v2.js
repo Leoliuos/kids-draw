@@ -3,6 +3,8 @@
 
     const c = document.getElementById("drawboard");
 
+    const sessionkey = "this comes from localstorage?";
+
     const ctx = c.getContext("2d");
     ctx.canvas.width = Math.min(document.body.clientWidth * 0.8, 1754);
     ctx.canvas.height = Math.min(document.body.clientWidth * 0.8 * 0.7, 1240);
@@ -125,6 +127,8 @@
         }
         toggle = false;
         coordlastframe = [0, 0];
+        var dataURL = c.toDataURL();
+        si.value = dataURL;
     };
 
     c.addEventListener("mouseleave", function(event) {

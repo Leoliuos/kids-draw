@@ -1,7 +1,6 @@
 (function() {
     const theme = "forest";
     console.log(theme);
-
     const bg = document.getElementById("bg");
     bg.src = "/images/background_" + theme + ".jpg";
 
@@ -110,7 +109,7 @@
         }
     });
 
-    var nexttimeout = setTimeout(movetoScreen, 19000);
+    var nexttimeout = setTimeout(movetoScreen, 9000);
     var i = 0;
     function movetoScreen() {
         characters[i].classList.add("destination");

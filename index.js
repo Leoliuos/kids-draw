@@ -216,9 +216,10 @@ app.post("/subregister", async (req, res) => {
     } else {
         try {
             const subtest = await db.checkifsubUsernameTaken(
+                req.body.first,
                 req.session.userId
             );
-            if (!subtest.rows) {
+            if (subtest.rows.length === 0) {
                 if (!req.body.first) {
                     throw "empty input field";
                 }
@@ -244,7 +245,7 @@ app.post("/subregister", async (req, res) => {
                     firstname: req.body.first,
                     password: password,
                     id: returnid.rows[0].id,
-                    type: returnid.rows[0].type
+                    type: type
                 };
                 res.send(data);
             } else {
@@ -282,7 +283,6 @@ app.post("/sublogin", async (req, res) => {
                 }
             }
         } catch (err) {
-            console.log(err);
             res.status(500).send("fail");
         }
     }
@@ -292,7 +292,6 @@ app.post("/subedit", async (req, res) => {
     if (!req.session.userId) {
         res.redirect("/welcome");
     } else {
-        console.log(req.body.delete);
         if (!!req.body.delete) {
             try {
                 const returnid = await db.deletesubUser(
@@ -351,7 +350,17 @@ app.post("/subedit", async (req, res) => {
 });
 
 app.get("/draw", (req, res) => {
-    res.sendFile(__dirname + "/canvas.html");
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else {
+        //console.log(req.csrfToken());
+        //res.cookie("mycatname", req.csrfToken() + "mycatname");
+        res.sendFile(__dirname + "/canvas.html");
+    }
+});
+
+app.post("/draw", (req, res) => {
+    console.log(req);
 });
 
 app.get("/logout", (req, res) => {

@@ -37,8 +37,8 @@ class Subusers extends React.Component {
                 .post("/sublogin", {
                     id: e.target.id
                 })
-                .then(() => {
-                    location.replace("/");
+                .then(resp => {
+                    this.props.dispatch(changeuserType([{ userType: 3 }]));
                 })
                 .catch(() => {
                     this.setState({ error: "error" });

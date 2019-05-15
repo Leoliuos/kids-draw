@@ -49,6 +49,8 @@ class App extends React.Component {
                     <World />
                 </div>
             );
+        } else {
+            return <div />;
         }
     }
 }
