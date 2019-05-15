@@ -9,8 +9,13 @@ import { getSubUsers, addnewSubUser } from "./actions";
 class Settings extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { userselected: 0, editname: "placeholder" };
+        this.state = {
+            userselected: 0,
+            editname: "placeholder",
+            delete: false
+        };
         this.changeSelection = this.changeSelection.bind(this);
+        this.handleChangeEdit = this.handleChangeEdit.bind(this);
     }
     componentDidMount() {
         this.props.dispatch(getSubUsers());
@@ -45,6 +50,47 @@ class Settings extends React.Component {
                 });
         }
     }
+    handleInputSubEdit(e) {
+        e.preventDefault();
+        if (!!this.state.editpassw) {
+            axios
+                .post("/subedit", {
+                    first: this.state.editname,
+                    passw: this.state.editpassw,
+                    adult: this.state.editadult,
+                    id: this.state.userselected,
+                    delete: this.state.delete
+                })
+                .then(data => {
+                    this.props.dispatch(getSubUsers());
+                    this.setState({ userselected: 0 });
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.setState({ error: "error" });
+                });
+        } else {
+            axios
+                .post("/subedit", {
+                    first: this.state.editname,
+                    adult: this.state.editadult,
+                    id: this.state.userselected,
+                    delete: this.state.delete
+                })
+                .then(data => {
+                    if (!data.deleted) {
+                        this.props.dispatch(getSubUsers());
+                        this.setState({ userselected: 0 });
+                    } else {
+                        this.props.dispatch(deleteSubUser(data));
+                        this.setState({ userselected: 0 });
+                    }
+                })
+                .catch(() => {
+                    this.setState({ error: "error" });
+                });
+        }
+    }
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
@@ -55,10 +101,18 @@ class Settings extends React.Component {
         this.setState({ userselected: id });
         this.setState({ editname: name });
     }
+    handleChangeEdit(e) {
+        if (e.target.name != "delete") {
+            this.setState({ [e.target.name]: e.target.value });
+        } else {
+            this.setState({ [e.target.name]: e.target.checked });
+        }
+    }
     render() {
         const { subUsers } = this.props;
         return (
             <div>
+                {this.state.delete}
                 <div className="subuserboxC">
                     <form onSubmit={e => this.handleInput(e)}>
                         <div className="createsubuser">
@@ -107,7 +161,7 @@ class Settings extends React.Component {
                 </div>
                 {this.state.userselected != 0 && (
                     <div className="subuserboxE">
-                        <form>
+                        <form onSubmit={e => this.handleInputSubEdit(e)}>
                             <div className="createsubuser">
                                 <h1>Edit</h1>
                                 <p>Sub-user :</p>
@@ -117,15 +171,37 @@ class Settings extends React.Component {
                                     value={this.state.editname}
                                     onChange={e => this.handleChangeName(e)}
                                 />
-                                <p>
-                                    Adult user (monitoring)
-                                    <input name="adult" type="checkbox" />
-                                </p>
-                                <p>Sub-user Password (Optional) :</p>
-                                <input name="passw" type="password" />
+                                {!this.state.delete && (
+                                    <div>
+                                        <p>
+                                            Adult user (monitoring)
+                                            <input
+                                                name="editadult"
+                                                type="checkbox"
+                                                onChange={e =>
+                                                    this.handleChangeEdit(e)
+                                                }
+                                            />
+                                        </p>
+                                        <p>Sub-user Password (Optional) :</p>
+                                        <input
+                                            name="editpassw"
+                                            type="password"
+                                            onChange={e =>
+                                                this.handleChangeEdit(e)
+                                            }
+                                        />
+                                    </div>
+                                )}
+                                <p />
+                                Delete this user
+                                <input
+                                    name="delete"
+                                    type="checkbox"
+                                    onChange={e => this.handleChangeEdit(e)}
+                                />
                                 <p />
                                 <button>Edit</button>
-                                <button>Delete</button>
                             </div>
                         </form>
                     </div>

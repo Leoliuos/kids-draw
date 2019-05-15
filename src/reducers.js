@@ -22,5 +22,16 @@ export default function(state = {}, action) {
         };
     }
 
+    if (action.type == "DELETE_SUBUSER") {
+        state = {
+            ...state,
+            subUsers: state.subUsers.map(user => {
+                if (user.id != action.id) {
+                    return user;
+                }
+            })
+        };
+    }
+
     return state;
 }

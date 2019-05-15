@@ -22,3 +22,10 @@ export async function addnewSubUser(data) {
         subUsers: data
     };
 }
+
+export async function deleteSubUser(data) {
+    return {
+        type: "DELETE_SUBUSER",
+        subUsers: data
+    };
+}

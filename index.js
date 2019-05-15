@@ -215,37 +215,44 @@ app.post("/subregister", async (req, res) => {
         res.redirect("/welcome");
     } else {
         try {
-            if (!req.body.first) {
-                throw "empty input field";
-            }
-            let type = 3;
-            if (req.body.adult) {
-                type = 2;
-            }
-            let password = null;
-            if (!!req.body.passw) {
-                const passw = await bc.hashPassword(req.body.passw);
-                password = passw;
-            }
-            const returnid = await db.createsubUser(
-                req.body.first,
-                password,
-                type,
+            const subtest = await db.checkifsubUsernameTaken(
                 req.session.userId
             );
-            if (!returnid.rows[0].id) {
-                throw "createUser not successfull";
+            if (!subtest.rows) {
+                if (!req.body.first) {
+                    throw "empty input field";
+                }
+                let type = 3;
+                if (req.body.adult) {
+                    type = 2;
+                }
+                let password = null;
+                if (!!req.body.passw) {
+                    const passw = await bc.hashPassword(req.body.passw);
+                    password = passw;
+                }
+                const returnid = await db.createsubUser(
+                    req.body.first,
+                    password,
+                    type,
+                    req.session.userId
+                );
+                if (!returnid.rows[0].id) {
+                    throw "createUser not successfull";
+                }
+                const data = {
+                    firstname: req.body.first,
+                    password: password,
+                    id: returnid.rows[0].id,
+                    type: returnid.rows[0].type
+                };
+                res.send(data);
+            } else {
+                throw "username exists, choose another one";
             }
-            const data = {
-                firstname: req.body.first,
-                password: password,
-                id: returnid.rows[0].id,
-                type: returnid.rows[0].type
-            };
-            res.send(data);
         } catch (err) {
             console.log(err);
-            res.status(500).send("fail");
+            res.status(500).send(err);
         }
     }
 });
@@ -277,6 +284,68 @@ app.post("/sublogin", async (req, res) => {
         } catch (err) {
             console.log(err);
             res.status(500).send("fail");
+        }
+    }
+});
+
+app.post("/subedit", async (req, res) => {
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else {
+        console.log(req.body.delete);
+        if (!!req.body.delete) {
+            try {
+                const returnid = await db.deletesubUser(
+                    req.session.userId,
+                    req.body.first
+                );
+                const data = {
+                    firstname: req.body.first,
+                    id: returnid.rows[0].id,
+                    deleted: true
+                };
+                res.send(data);
+            } catch (err) {
+                console.log(err);
+                res.status(500).send("fail");
+            }
+        } else {
+            try {
+                if (!req.body.first) {
+                    throw "empty input field";
+                }
+                let type = 3;
+                if (req.body.adult) {
+                    type = 2;
+                }
+                let password = null;
+                if (!!req.body.passw) {
+                    const passw = await bc.hashPassword(req.body.passw);
+                    password = passw;
+                }
+                const origname = await db.findsubUserCurrentName(req.body.id);
+                // first, passw, type, id, origname
+                const returnid = await db.editsubUser(
+                    req.body.first,
+                    password,
+                    type,
+                    req.session.userId,
+                    origname.rows[0].firstname
+                );
+                if (!returnid.rows[0].id) {
+                    throw "createUser not successfull";
+                }
+                const data = {
+                    firstname: req.body.first,
+                    password: password,
+                    id: returnid.rows[0].id,
+                    type: returnid.rows[0].type
+                };
+                res.send(data);
+            } catch (err) {
+                console.log(err);
+                res.status(500).send("fail");
+            }
         }
     }
 });
