@@ -16,5 +16,6 @@ CREATE TABLE subusers(
     password VARCHAR(60),
     type INTEGER,
     icon INTEGER,
+    imageskey VARCHAR(20),
     userid INTEGER REFERENCES users(id) NOT NULL
 );

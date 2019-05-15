@@ -1,26 +1,29 @@
 (function() {
-    console.log("ready to go");
+    var c = document.getElementById("drawboard");
 
-    const c = document.getElementById("drawboard");
+    var userkey = document.location.pathname.split("/")[2];
 
-    const sessionkey = "this comes from localstorage?";
-
-    const ctx = c.getContext("2d");
+    var ctx = c.getContext("2d");
     ctx.canvas.width = Math.min(document.body.clientWidth * 0.8, 1754);
     ctx.canvas.height = Math.min(document.body.clientWidth * 0.8 * 0.7, 1240);
     c.style.marginLeft = document.body.clientWidth * 0.1 + "px";
     c.style.marginTop = document.body.clientWidth * 0.025 + "px";
 
-    let toggle = false;
+    ctx.beginPath();
+    ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillStyle = "white";
+    ctx.fill();
 
-    let coordlastframe = [0, 0];
+    var toggle = false;
 
-    let lastbigwidth = 0;
-    let lastsmallwidth = 0;
+    var coordlastframe = [0, 0];
+
+    var lastbigwidth = 0;
+    var lastsmallwidth = 0;
     // Kids Draw canvas by Leo Lipasti
 
     // these are shades from royalblue to white for ballpoint pen
-    const ballpointshadesblue = [
+    var ballpointshadesblue = [
         "#4169e1",
         "#5276e3",
         "#6384e6",
@@ -32,7 +35,7 @@
     ];
 
     // these are shades for black ballpoint pen
-    const ballpointshadesblack = [
+    var ballpointshadesblack = [
         "#000000",
         "#181818",
         "#303030",
@@ -44,7 +47,7 @@
     ];
 
     // these are shades for red ballpoint pen
-    const ballpointshadesred = [
+    var ballpointshadesred = [
         "#ff2819",
         "#f22a1d",
         "#f23326",
@@ -55,7 +58,7 @@
         "#ef837c"
     ];
     // these are shades for green ballpoint pen
-    const ballpointshadesgreen = [
+    var ballpointshadesgreen = [
         "#00d60d",
         "#06d813",
         "#0ddd1a",
@@ -66,7 +69,7 @@
         "#61ed6b"
     ];
 
-    let ballpointshades = ballpointshadesgreen;
+    var ballpointshades = ballpointshadesgreen;
 
     var mousecoordMoved = [0, 0];
 
@@ -128,18 +131,22 @@
         toggle = false;
         coordlastframe = [0, 0];
         var dataURL = c.toDataURL();
-        si.value = dataURL;
+        localStorage.setItem(userkey, dataURL);
     };
 
     c.addEventListener("mouseleave", function(event) {
         toggle = false;
         coordlastframe = [0, 0];
+        var dataURL = c.toDataURL();
+        localStorage.setItem(userkey, dataURL);
     });
     c.addEventListener("touchcancel", function(event) {
         // preventing mouse event
         event.preventDefault();
         toggle = false;
         coordlastframe = [0, 0];
+        var dataURL = c.toDataURL();
+        localStorage.setItem(userkey, dataURL);
     });
 
     c.addEventListener("mousemove", function(event) {
@@ -169,18 +176,18 @@
             // pen pressure drops or ink runs down, either way, pressure falls each frame, Min value 1.5
             penpressure = Math.max(penpressure - 0.05, 1.5);
             // mouse movement vector length per frame. Using it to determine line size. Faster = thinner line
-            let vectorlen = Math.hypot(
+            var vectorlen = Math.hypot(
                 Math.abs(mousecoord[0] - coordlastframe[0]),
                 Math.abs(mousecoord[1] - coordlastframe[1])
             );
             // 1.4142... is just a number that came up often while moving really slow with my mouse
             // seemed like a good zero state in this case but could be anything, just a value to clamp lowest values to
-            let bigwidth =
+            var bigwidth =
                 3 -
                 Math.min(Math.max(vectorlen - 1.4142135623730951, 0), 6) / 2;
             // smooths size change per frame 1/4 on the new pressure & penpressure :
             bigwidth = Math.min((bigwidth + lastbigwidth * 3) / 4, penpressure);
-            let smallwidth =
+            var smallwidth =
                 1.75 -
                 Math.min(Math.max(vectorlen - 1.4142135623730951, 0), 2) / 2;
             // smooths size change per frame 1/3 on the new pressure & penpressure :
@@ -193,7 +200,7 @@
             // END OF // LINE WIDTHS // LINE WIDTHS // LINE WIDTHS
 
             // Royal blue shades by vector length
-            let shadeselect = Math.min(
+            var shadeselect = Math.min(
                 Math.round(vectorlen - 2),
                 ballpointshades.length - 1
             );

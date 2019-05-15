@@ -215,6 +215,7 @@ app.post("/subregister", async (req, res) => {
         res.redirect("/welcome");
     } else {
         try {
+            // sub login and sub register routes are less security critical as they are routes behind master account
             const subtest = await db.checkifsubUsernameTaken(
                 req.body.first,
                 req.session.userId
@@ -232,11 +233,13 @@ app.post("/subregister", async (req, res) => {
                     const passw = await bc.hashPassword(req.body.passw);
                     password = passw;
                 }
+                const imageskey = uidSafe.sync(10);
                 const returnid = await db.createsubUser(
                     req.body.first,
                     password,
                     type,
-                    req.session.userId
+                    req.session.userId,
+                    imageskey
                 );
                 if (!returnid.rows[0].id) {
                     throw "createUser not successfull";
@@ -263,6 +266,7 @@ app.post("/sublogin", async (req, res) => {
         res.redirect("/welcome");
     } else {
         try {
+            // sub login and sub register routes are less security critical as they are routes behind master account
             if (!req.body.id) {
                 throw "user is trying something weird";
             }
@@ -349,18 +353,22 @@ app.post("/subedit", async (req, res) => {
     }
 });
 
-app.get("/draw", (req, res) => {
+app.get("/draw", async (req, res) => {
     if (!req.session.userId) {
         res.redirect("/welcome");
     } else {
-        //console.log(req.csrfToken());
-        //res.cookie("mycatname", req.csrfToken() + "mycatname");
-        res.sendFile(__dirname + "/canvas.html");
+        const imagekey = await db.finduserimagekey(req.session.subuserId);
+        res.redirect("/draw/" + imagekey.rows[0].imageskey);
     }
 });
 
-app.post("/draw", (req, res) => {
-    console.log(req);
+app.get("/draw/*", async (req, res) => {
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else {
+        res.set("X-Frame-Options", "deny");
+        res.sendFile(__dirname + "/canvas.html");
+    }
 });
 
 app.get("/logout", (req, res) => {

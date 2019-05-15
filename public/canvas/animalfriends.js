@@ -1,21 +1,26 @@
 (function() {
-    const theme = "forest";
-    console.log(theme);
-    const bg = document.getElementById("bg");
+    changetheme = localStorage.getItem("drawtheme");
+    var theme = "forest";
+    if (changetheme === "circus") {
+        theme = "circus";
+    } else if (changetheme === "autumn") {
+        theme = "autumn";
+    }
+    var bg = document.getElementById("bg");
     bg.src = "/images/background_" + theme + ".jpg";
 
-    const bottomleft = document.getElementById("bottomleft");
-    const bottomleftalt = document.getElementById("bottomleft_alt");
-    const bottom = document.getElementById("bottom");
-    const bottomalt = document.getElementById("bottom_alt");
-    const bottomright = document.getElementById("bottomright");
-    const bottomrightalt = document.getElementById("bottomright_alt");
-    const topright = document.getElementById("topright");
-    const walker = document.getElementById("walker");
-    const walkeralt = document.getElementById("walker_alt");
-    const fly = document.getElementById("fly");
+    var bottomleft = document.getElementById("bottomleft");
+    var bottomleftalt = document.getElementById("bottomleft_alt");
+    var bottom = document.getElementById("bottom");
+    var bottomalt = document.getElementById("bottom_alt");
+    var bottomright = document.getElementById("bottomright");
+    var bottomrightalt = document.getElementById("bottomright_alt");
+    var topright = document.getElementById("topright");
+    var walker = document.getElementById("walker");
+    var walkeralt = document.getElementById("walker_alt");
+    var fly = document.getElementById("fly");
 
-    const characters = [
+    var characters = [
         bottomleft,
         bottomleftalt,
         bottom,
@@ -30,16 +35,16 @@
 
     // Image paths set up
 
-    const imagepath = "/images/animals/" + theme + "_";
-    const format = ".png";
+    var imagepath = "/images/animals/" + theme + "_";
+    var format = ".png";
 
     for (var i = 0; i < characters.length; i++) {
         characters[i].src = imagepath + characters[i].id + format;
     }
 
     // Image sizing, original pixel sizes * adjusted scale
-    const circusscale = 1.5;
-    const imgsizes = {
+    var circusscale = 1.5;
+    var imgsizes = {
         forest: {
             bottomleft: [2144, 3219],
             bottomleftalt: [1957, 1387],

@@ -10,9 +10,15 @@ exports.createUser = function createUser(first, last, email, passw) {
     return db.query(q, params);
 };
 
-exports.createsubUser = function createsubUser(first, passw, type, userid) {
-    let q = `INSERT INTO subusers (firstname, password, type, userid) VALUES ($1, $2, $3, $4) RETURNING id`;
-    let params = [first, passw, type, userid];
+exports.createsubUser = function createsubUser(
+    first,
+    passw,
+    type,
+    userid,
+    imageskey
+) {
+    let q = `INSERT INTO subusers (firstname, password, type, userid, imageskey) VALUES ($1, $2, $3, $4, $5) RETURNING id`;
+    let params = [first, passw, type, userid, imageskey];
     return db.query(q, params);
 };
 
@@ -73,5 +79,11 @@ exports.findsubUserCurrentName = function findsubUserCurrentName(id) {
 exports.checkifsubUsernameTaken = function checkifsubUsernameTaken(first, id) {
     let q = `SELECT id FROM subusers WHERE firstname=$1 AND userid=$2`;
     let params = [first, id];
+    return db.query(q, params);
+};
+
+exports.finduserimagekey = function finduserimagekey(id) {
+    let q = `SELECT imageskey FROM subusers WHERE id=$1`;
+    let params = [id];
     return db.query(q, params);
 };
