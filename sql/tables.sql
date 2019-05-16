@@ -17,7 +17,18 @@ CREATE TABLE subusers(
     type INTEGER,
     icon INTEGER,
     imageskey VARCHAR(20),
-    friendshipkey VARCHAR(20),
+    friendshipkey VARCHAR(30) UNIQUE,
     picindex INTEGER,
     userid INTEGER REFERENCES users(id) NOT NULL
+);
+
+DROP TABLE IF EXISTS friendships;
+
+CREATE TABLE friendships(
+    id SERIAL PRIMARY KEY,
+    requesterid INTEGER NOT NULL,
+    password VARCHAR(60) NOT NULL,
+    receiverid INTEGER,
+    accepted BOOLEAN,
+    uniqcode VARCHAR(250) UNIQUE
 );

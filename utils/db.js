@@ -48,7 +48,7 @@ exports.getusername = function getusername(id) {
 };
 
 exports.getsubusers = function getsubusers(id) {
-    let q = `SELECT firstname, password, type, id FROM subusers WHERE userid=$1`;
+    let q = `SELECT firstname, password, type, id, friendshipkey FROM subusers WHERE userid=$1`;
     let params = [id];
     return db.query(q, params);
 };
@@ -92,5 +92,66 @@ exports.finduserimagekey = function finduserimagekey(id) {
 exports.setimageindex = function setimageindex(picindex, id) {
     let q = `UPDATE subusers SET picindex = $1 WHERE id=$2`;
     let params = [picindex, id];
+    return db.query(q, params);
+};
+
+// PREPARE FRIENDSHIPS
+
+exports.checkexistingfriendshipkey = function checkexistingfriendshipkey(id) {
+    let q = `SELECT id FROM friendships WHERE requesterid=$1`;
+    let params = [id];
+    return db.query(q, params);
+};
+
+exports.makefriendshipkey = function makefriendshipkey(requesterid, password) {
+    let q = `INSERT INTO friendships (requesterid, password) VALUES ($1, $2) RETURNING id`;
+    let params = [requesterid, password];
+    return db.query(q, params);
+};
+
+exports.updatefriendshipkey = function updatefriendshipkey(
+    password,
+    requesterid
+) {
+    let q = `UPDATE friendships SET password = $1 WHERE requesterid=$2`;
+    let params = [password, requesterid];
+    return db.query(q, params);
+};
+
+exports.finduiid = function finduiid(uid) {
+    let q = `SELECT id FROM subusers WHERE friendshipkey=$1`;
+    let params = [uid];
+    return db.query(q, params);
+};
+
+exports.finduipassword = function finduipassword(id) {
+    let q = `SELECT password FROM friendships WHERE requesterid=$1`;
+    let params = [id];
+    return db.query(q, params);
+};
+
+// CREATE FRIENDSHIPS
+exports.checkexistingconnection = function checkexistingconnection(uniqcode) {
+    let q = `SELECT id FROM friendships WHERE uniqcode=$1`;
+    let params = [uniqcode];
+    return db.query(q, params);
+};
+
+exports.makefriendconnection = function makefriendconnection(
+    receiverid,
+    uniqcode,
+    requesterid,
+    password
+) {
+    let q = `INSERT INTO friendships (receiverid, uniqcode, requesterid, password, accepted) VALUES ($1, $2, $3, $4, $5) RETURNING id`;
+    let params = [receiverid, uniqcode, requesterid, password, true];
+    return db.query(q, params);
+};
+
+// GET friendships
+
+exports.queryfriends = function queryfriends(id) {
+    let q = `SELECT receiverid FROM friendships WHERE requesterid=$1`;
+    let params = [id];
     return db.query(q, params);
 };

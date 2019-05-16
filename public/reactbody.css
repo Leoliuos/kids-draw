@@ -163,6 +163,50 @@ a:hover {
     display: inline-block;
 }
 
+.friendshipbox {
+    width: 100vw;
+    background-color: PaleGreen;
+    border-style: solid;
+    border-width: 1px;
+    border-color: green white green white;
+    border-radius: 1vw;
+}
+
+.fcontainershort {
+    width: 20%;
+    height: 20px;
+    overflow: scroll;
+    display: inline-block;
+}
+
+button.fcontainershort {
+    width: 20%;
+    height: 20px;
+}
+
+.fcontainer {
+    width: 30%;
+    height: 20px;
+    overflow: scroll;
+    display: inline-block;
+}
+
+.success {
+    width: 100%;
+    background-color: green;
+    color: white;
+    text-align: right;
+    padding-right: 10%;
+}
+
+.failure {
+    width: 100%;
+    background-color: red;
+    color: black;
+    text-align: right;
+    padding-right: 10%;
+}
+
 .forest {
     background-image: url("images/background_forest.jpg");
     background-size: cover;

@@ -154,19 +154,21 @@ class Settings extends React.Component {
                 </div>
                 <div className="subuserboxL">
                     <div className="createsubuser">
-                        {subUsers.map((user, index) => (
-                            <div
-                                key={user.id}
-                                onClick={() =>
-                                    this.changeSelection(
-                                        user.id,
-                                        user.firstname
-                                    )
-                                }
-                            >
-                                <p>{user.firstname}</p>
-                            </div>
-                        ))}
+                        {subUsers
+                            .filter(user => user.type != 1)
+                            .map((user, index) => (
+                                <div
+                                    key={user.id}
+                                    onClick={() =>
+                                        this.changeSelection(
+                                            user.id,
+                                            user.firstname
+                                        )
+                                    }
+                                >
+                                    <p>{user.firstname}</p>
+                                </div>
+                            ))}
                     </div>
                 </div>
                 {this.state.userselected != 0 && (

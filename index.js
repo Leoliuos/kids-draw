@@ -202,7 +202,8 @@ app.get("/subusers", async (req, res) => {
                     firstname: subuserdata.rows[o].firstname,
                     password: passwordtrue,
                     id: subuserdata.rows[o].id,
-                    type: subuserdata.rows[o].type
+                    type: subuserdata.rows[o].type,
+                    friendshipkey: subuserdata.rows[o].friendshipkey
                 });
             }
             res.send(data);
@@ -234,8 +235,8 @@ app.post("/subregister", async (req, res) => {
                     const passw = await bc.hashPassword(req.body.passw);
                     password = passw;
                 }
-                const imageskey = uidSafe.sync(10);
-                const friendshipkey = uidSafe.sync(15);
+                const imageskey = uidSafe.sync(20);
+                const friendshipkey = uidSafe.sync(30);
                 const returnid = await db.createsubUser(
                     req.body.first,
                     password,
@@ -355,6 +356,8 @@ app.post("/subedit", async (req, res) => {
     }
 });
 
+// SUB TYPE 3 - CHILDREN
+
 app.get("/view", async (req, res) => {
     if (!req.session.userId) {
         res.redirect("/welcome");
@@ -404,6 +407,82 @@ app.get("/draw/*", async (req, res) => {
     } else {
         res.set("X-Frame-Options", "deny");
         res.sendFile(__dirname + "/canvas.html");
+    }
+});
+
+// FRIENDS
+
+app.post("/friends/generatekey", async (req, res) => {
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else {
+        try {
+            const keycheck = await db.checkexistingfriendshipkey(req.body.id);
+            const password = await bc.hashPassword(req.body.makepassw);
+            if (!!keycheck.rows[0]) {
+                const returnid = await db.updatefriendshipkey(
+                    password,
+                    req.body.id
+                );
+                res.send("success");
+            } else {
+                const returnid = await db.makefriendshipkey(
+                    req.body.id,
+                    password
+                );
+                if (!returnid.rows[0].id) {
+                    throw "createFriendship not successfull";
+                }
+                res.send("success");
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send(err);
+        }
+    }
+});
+
+app.post("/friends/enterkey", async (req, res) => {
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else {
+        try {
+            const password = req.body.passw;
+            const requesteruid = req.body.uid;
+            const keycheck = await db.finduiid(requesteruid);
+            if (!keycheck.rows[0]) {
+                throw "user not found";
+            }
+            const passwordcheck = await db.finduipassword(keycheck.rows[0].id);
+            const comparepass = await bc.checkPassword(
+                password,
+                passwordcheck.rows[0].password
+            );
+            if (!comparepass) {
+                throw "password incorrect";
+            }
+            const uniqcode = ["U" + keycheck.rows[0].id, "U" + req.body.id]
+                .sort()
+                .join("");
+            const exist = await db.checkexistingconnection(uniqcode);
+            if (!!exist.rows[0]) {
+                throw "already connected.";
+            }
+            if (req.body.id == keycheck.rows[0].id) {
+                throw "users are the same one";
+            }
+            // receiverid, uniqcode, requesterid, password, true
+            const friendconnection = await db.makefriendconnection(
+                req.body.id,
+                uniqcode,
+                keycheck.rows[0].id,
+                passwordcheck.rows[0].password
+            );
+            res.send("success");
+        } catch (err) {
+            console.log(err);
+            res.status(500).send(err);
+        }
     }
 });
 
