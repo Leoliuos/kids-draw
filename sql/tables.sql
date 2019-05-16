@@ -8,7 +8,7 @@ CREATE TABLE users(
     password VARCHAR(60) NOT NULL
 );
 
-DROP TABLE IF EXISTS subusers;
+DROP TABLE IF EXISTS subusers CASCADE;
 
 CREATE TABLE subusers(
     id SERIAL PRIMARY KEY,

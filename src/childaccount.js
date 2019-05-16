@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "./axios";
 
-export default class World extends React.Component {
+import { connect } from "react-redux";
+
+class World extends React.Component {
     constructor(props) {
         super(props);
         this.state = { imageskey: null, picindex: 0 };
@@ -20,12 +22,36 @@ export default class World extends React.Component {
             });
     }
     render() {
+        if (!this.props.users) {
+            return (
+                <div className="circus">
+                    <a href="/draw">
+                        <div className="tabularasa" />
+                    </a>
+                    {rows.map(i => (
+                        <div key={i}>
+                            <a href={"/draw/" + this.state.imageskey + "/" + i}>
+                                <img
+                                    className="drawing"
+                                    src={localStorage.getItem(
+                                        this.state.imageskey + i
+                                    )}
+                                />
+                            </a>
+                        </div>
+                    ))}
+                </div>
+            );
+        }
         var rows = [],
             i = 0,
             len = this.state.picindex;
         while (++i <= len) rows.push(i);
         return (
             <div className="circus">
+                <a href="/draw">
+                    <div className="tabularasa" />
+                </a>
                 {rows.map(i => (
                     <div key={i}>
                         <a href={"/draw/" + this.state.imageskey + "/" + i}>
@@ -38,10 +64,19 @@ export default class World extends React.Component {
                         </a>
                     </div>
                 ))}
-                <a href="/draw">
-                    <div className="tabularasa" />
-                </a>
+                {!!this.props.users.length &&
+                    this.props.users.map((user, index) => (
+                        <div key={index}>{user}</div>
+                    ))}
             </div>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        users: state.onlineusers && state.onlineusers
+    };
+}
+
+export default connect(mapStateToProps)(World);

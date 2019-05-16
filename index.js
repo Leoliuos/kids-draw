@@ -507,4 +507,78 @@ server.listen(process.env.PORT || 8080, function() {
     console.log("Kids-Draw");
 });
 
-// TODO SOCKET IO MESSAGING HERE :
+// SOCKET IO // SOCKET IO // SOCKET IO // SOCKET IO
+
+let onlineSockets = {};
+
+io.on("connection", function(socket) {
+    if (!socket.request.session.subuserId) {
+        return socket.disconnect(true);
+    }
+    // we know this user by the initial handshake
+    const userId = socket.request.session.subuserId;
+
+    onlineSockets[userId] = socket.id;
+
+    var friends = [];
+
+    db.queryfriends(userId)
+        .then(results => {
+            for (var o = 0; o < results.rows.length; o++) {
+                if (results.rows[o].receiverid == userId) {
+                    if (results.rows[o].requesterid != null) {
+                        io.to(onlineSockets[results.rows[o].requesterid]).emit(
+                            "userJoined",
+                            userId
+                        );
+                        friends.push(results.rows[o].requesterid);
+                    }
+                } else if (results.rows[o].requesterid == userId) {
+                    if (results.rows[o].receiverid != null) {
+                        io.to(onlineSockets[results.rows[o].receiverid]).emit(
+                            "userJoined",
+                            userId
+                        );
+                        friends.push(results.rows[o].receiverid);
+                    }
+                }
+            }
+        })
+        .then(results => {
+            socket.emit("onlineUsers", friends);
+        });
+
+    socket.on("disconnect", () => {
+        db.queryfriends(userId).then(results => {
+            for (var o = 0; o < results.rows.length; o++) {
+                if (results.rows[o].receiverid === userId) {
+                    if (results.rows[o].requesterid != undefined) {
+                        io.to(onlineSockets[results.rows[o].requesterid]).emit(
+                            "userLeft",
+                            userId
+                        );
+                    }
+                } else if (results.rows[o].requesterid === userId) {
+                    if (results.rows[o].receiverid != undefined) {
+                        io.to(onlineSockets[results.rows[o].receiverid]).emit(
+                            "userLeft",
+                            userId
+                        );
+                    }
+                }
+            }
+        });
+    });
+
+    socket.on("chatMessage", data => {
+        const uniqcode = [
+            "U" + data.target,
+            "U" + socket.request.session.subuserId
+        ]
+            .sort()
+            .join("");
+        db.confirmfriendship(uniqcode).then(() => {
+            io.to(onlineSockets[data.target]).emit(data);
+        });
+    });
+});

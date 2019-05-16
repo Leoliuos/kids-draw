@@ -151,7 +151,13 @@ exports.makefriendconnection = function makefriendconnection(
 // GET friendships
 
 exports.queryfriends = function queryfriends(id) {
-    let q = `SELECT receiverid FROM friendships WHERE requesterid=$1`;
+    let q = `SELECT receiverid, requesterid FROM friendships WHERE (requesterid=$1 AND accepted=true) OR (receiverid=$1 AND accepted=true)`;
     let params = [id];
+    return db.query(q, params);
+};
+
+exports.confirmfriendship = function confirmfriendship(uniq) {
+    let q = `SELECT id FROM friendships WHERE uniqcode=$1`;
+    let params = [uniq];
     return db.query(q, params);
 };
