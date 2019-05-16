@@ -7,7 +7,7 @@
         theme = "autumn";
     }
     var bg = document.getElementById("bg");
-    bg.src = "/images/background_" + theme + ".jpg";
+    bg.classList.add(theme);
 
     var bottomleft = document.getElementById("bottomleft");
     var bottomleftalt = document.getElementById("bottomleft_alt");

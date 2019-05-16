@@ -69,7 +69,23 @@ footer {
     top: 0;
     z-index: -1000;
 }
+.forest {
+    background-image: url("images/background_forest.jpg");
+    background-size: cover;
+    height: 100vh;
+}
 
+.circus {
+    background-image: url("images/background_circus.jpg");
+    background-size: cover;
+    height: 100vh;
+}
+
+.autumn {
+    background-image: url("images/background_autumn.jpg");
+    background-size: cover;
+    height: 100vh;
+}
 #bottomleft.destination {
     position: absolute;
     left: 0;

@@ -17,5 +17,7 @@ CREATE TABLE subusers(
     type INTEGER,
     icon INTEGER,
     imageskey VARCHAR(20),
+    friendshipkey VARCHAR(20),
+    picindex INTEGER,
     userid INTEGER REFERENCES users(id) NOT NULL
 );

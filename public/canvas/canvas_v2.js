@@ -2,6 +2,8 @@
     var c = document.getElementById("drawboard");
 
     var userkey = document.location.pathname.split("/")[2];
+    var imageindex = document.location.pathname.split("/")[3];
+    var storagekey = userkey + imageindex;
 
     var ctx = c.getContext("2d");
     ctx.canvas.width = Math.min(document.body.clientWidth * 0.8, 1754);
@@ -13,6 +15,16 @@
     ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fillStyle = "white";
     ctx.fill();
+
+    checkversions = localStorage.getItem(userkey + imageindex);
+
+    if (checkversions) {
+        var image = new Image();
+        image.onload = function() {
+            ctx.drawImage(image, 0, 0, ctx.canvas.width, ctx.canvas.height);
+        };
+        image.src = checkversions;
+    }
 
     var toggle = false;
 
@@ -131,14 +143,14 @@
         toggle = false;
         coordlastframe = [0, 0];
         var dataURL = c.toDataURL();
-        localStorage.setItem(userkey, dataURL);
+        localStorage.setItem(storagekey, dataURL);
     };
 
     c.addEventListener("mouseleave", function(event) {
         toggle = false;
         coordlastframe = [0, 0];
         var dataURL = c.toDataURL();
-        localStorage.setItem(userkey, dataURL);
+        localStorage.setItem(storagekey, dataURL);
     });
     c.addEventListener("touchcancel", function(event) {
         // preventing mouse event
@@ -146,7 +158,7 @@
         toggle = false;
         coordlastframe = [0, 0];
         var dataURL = c.toDataURL();
-        localStorage.setItem(userkey, dataURL);
+        localStorage.setItem(storagekey, dataURL);
     });
 
     c.addEventListener("mousemove", function(event) {

@@ -15,10 +15,11 @@ exports.createsubUser = function createsubUser(
     passw,
     type,
     userid,
-    imageskey
+    imageskey,
+    friendshipkey
 ) {
-    let q = `INSERT INTO subusers (firstname, password, type, userid, imageskey) VALUES ($1, $2, $3, $4, $5) RETURNING id`;
-    let params = [first, passw, type, userid, imageskey];
+    let q = `INSERT INTO subusers (firstname, password, type, userid, imageskey, friendshipkey, picindex) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`;
+    let params = [first, passw, type, userid, imageskey, friendshipkey, 0];
     return db.query(q, params);
 };
 
@@ -83,7 +84,13 @@ exports.checkifsubUsernameTaken = function checkifsubUsernameTaken(first, id) {
 };
 
 exports.finduserimagekey = function finduserimagekey(id) {
-    let q = `SELECT imageskey FROM subusers WHERE id=$1`;
+    let q = `SELECT imageskey, picindex FROM subusers WHERE id=$1`;
     let params = [id];
+    return db.query(q, params);
+};
+
+exports.setimageindex = function setimageindex(picindex, id) {
+    let q = `UPDATE subusers SET picindex = $1 WHERE id=$2`;
+    let params = [picindex, id];
     return db.query(q, params);
 };

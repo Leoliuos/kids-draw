@@ -146,6 +146,44 @@ a:hover {
     text-align: left;
 }
 
+.tabularasa {
+    width: 200px;
+    height: 150px;
+    background-color: white;
+    border: 1px solid green;
+    margin: 15px;
+    display: inline-block;
+}
+
+.drawing {
+    width: 200px;
+    height: 150px;
+    border: 1px solid green;
+    margin: 15px;
+    display: inline-block;
+}
+
+.forest {
+    background-image: url("images/background_forest.jpg");
+    background-size: cover;
+    background-repeat: repeat;
+    height: 100vh;
+}
+
+.circus {
+    background-image: url("images/background_circus.jpg");
+    background-size: cover;
+    background-repeat: repeat;
+    height: 100vh;
+}
+
+.autumn {
+    background-image: url("images/background_autumn.jpg");
+    background-size: cover;
+    background-repeat: repeat;
+    height: 100vh;
+}
+
 input {
     width: 150px;
     height: 20px;

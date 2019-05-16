@@ -184,6 +184,8 @@ app.post("/register", async (req, res) => {
     }
 });
 
+// SIGNED IN - LOADING SUB USERS LIST
+
 app.get("/subusers", async (req, res) => {
     if (!req.session.userId) {
         res.redirect("/welcome");
@@ -215,7 +217,6 @@ app.post("/subregister", async (req, res) => {
         res.redirect("/welcome");
     } else {
         try {
-            // sub login and sub register routes are less security critical as they are routes behind master account
             const subtest = await db.checkifsubUsernameTaken(
                 req.body.first,
                 req.session.userId
@@ -234,12 +235,14 @@ app.post("/subregister", async (req, res) => {
                     password = passw;
                 }
                 const imageskey = uidSafe.sync(10);
+                const friendshipkey = uidSafe.sync(15);
                 const returnid = await db.createsubUser(
                     req.body.first,
                     password,
                     type,
                     req.session.userId,
-                    imageskey
+                    imageskey,
+                    friendshipkey
                 );
                 if (!returnid.rows[0].id) {
                     throw "createUser not successfull";
@@ -266,7 +269,6 @@ app.post("/sublogin", async (req, res) => {
         res.redirect("/welcome");
     } else {
         try {
-            // sub login and sub register routes are less security critical as they are routes behind master account
             if (!req.body.id) {
                 throw "user is trying something weird";
             }
@@ -353,12 +355,46 @@ app.post("/subedit", async (req, res) => {
     }
 });
 
+app.get("/view", async (req, res) => {
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else if (!req.session.subuserId) {
+        res.redirect("/");
+    } else {
+        // child goes to view from draw
+    }
+});
+
+app.get("/view/images", async (req, res) => {
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else if (!req.session.subuserId) {
+        res.redirect("/");
+    } else {
+        // child needs to list images
+        const imageskey = await db.finduserimagekey(req.session.subuserId);
+        res.send({
+            imageskey: imageskey.rows[0].imageskey,
+            picindex: imageskey.rows[0].picindex
+        });
+    }
+});
+
 app.get("/draw", async (req, res) => {
     if (!req.session.userId) {
         res.redirect("/welcome");
     } else {
-        const imagekey = await db.finduserimagekey(req.session.subuserId);
-        res.redirect("/draw/" + imagekey.rows[0].imageskey);
+        const userimagekey = await db.finduserimagekey(req.session.subuserId);
+        db.setimageindex(
+            userimagekey.rows[0].picindex + 1,
+            req.session.subuserId
+        );
+        res.redirect(
+            "/draw/" +
+                userimagekey.rows[0].imageskey +
+                "/" +
+                (userimagekey.rows[0].picindex + 1)
+        );
     }
 });
 
