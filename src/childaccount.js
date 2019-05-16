@@ -28,13 +28,19 @@ export default class World extends React.Component {
             <div className="circus">
                 {rows.map(i => (
                     <div key={i}>
-                        <img
-                            className="drawing"
-                            src={localStorage.getItem(this.state.imageskey + i)}
-                        />
-                        <div className="tabularasa" />
+                        <a href={"/draw/" + this.state.imageskey + "/" + i}>
+                            <img
+                                className="drawing"
+                                src={localStorage.getItem(
+                                    this.state.imageskey + i
+                                )}
+                            />
+                        </a>
                     </div>
                 ))}
+                <a href="/draw">
+                    <div className="tabularasa" />
+                </a>
             </div>
         );
     }
