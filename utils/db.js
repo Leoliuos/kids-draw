@@ -141,17 +141,27 @@ exports.makefriendconnection = function makefriendconnection(
     receiverid,
     uniqcode,
     requesterid,
-    password
+    password,
+    receivername,
+    requestername
 ) {
-    let q = `INSERT INTO friendships (receiverid, uniqcode, requesterid, password, accepted) VALUES ($1, $2, $3, $4, $5) RETURNING id`;
-    let params = [receiverid, uniqcode, requesterid, password, true];
+    let q = `INSERT INTO friendships (receiverid, uniqcode, requesterid, password, accepted, receivername, requestername ) VALUES ($1, $2, $3, $4, $5 ,$6, $7) RETURNING id`;
+    let params = [
+        receiverid,
+        uniqcode,
+        requesterid,
+        password,
+        true,
+        receivername,
+        requestername
+    ];
     return db.query(q, params);
 };
 
 // GET friendships
 
 exports.queryfriends = function queryfriends(id) {
-    let q = `SELECT receiverid, requesterid FROM friendships WHERE (requesterid=$1 AND accepted=true) OR (receiverid=$1 AND accepted=true)`;
+    let q = `SELECT receiverid, requesterid, receivername, requestername FROM friendships WHERE (requesterid=$1 AND accepted=true) OR (receiverid=$1 AND accepted=true)`;
     let params = [id];
     return db.query(q, params);
 };
@@ -159,5 +169,11 @@ exports.queryfriends = function queryfriends(id) {
 exports.confirmfriendship = function confirmfriendship(uniq) {
     let q = `SELECT id FROM friendships WHERE uniqcode=$1`;
     let params = [uniq];
+    return db.query(q, params);
+};
+
+exports.findsubusers = function findsubusers(id) {
+    let q = `SELECT firstname FROM subusers WHERE id=$1`;
+    let params = [id];
     return db.query(q, params);
 };

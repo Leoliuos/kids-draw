@@ -35,14 +35,8 @@ export default class Welcome extends React.Component {
                                 drawing canvas aimed for parents and children.
                             </p>
                             <p>
-                                Your child can send and receive drawings using
-                                only friend contacts you have whitelisted.
-                            </p>
-                            <p>
-                                Parents can use the site to chat with other
-                                parents or share drawn pictures behind a unique
-                                link to, lets say, the other parent at work, or
-                                grandparents ...
+                                Your child can only see drawings from friend
+                                contacts you have whitelisted.
                             </p>
                         </div>
                     )}

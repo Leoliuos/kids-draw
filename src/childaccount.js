@@ -30,11 +30,19 @@ class World extends React.Component {
                     </a>
                     {rows.map(i => (
                         <div key={i}>
-                            <a href={"/draw/" + this.state.imageskey + "/" + i}>
+                            <a
+                                href={
+                                    "/draw/" +
+                                    this.state.imageskey +
+                                    "/" +
+                                    (this.state.picindex - i + 1)
+                                }
+                            >
                                 <img
                                     className="drawing"
                                     src={localStorage.getItem(
-                                        this.state.imageskey + i
+                                        this.state.imageskey +
+                                            (this.state.picindex - i + 1)
                                     )}
                                 />
                             </a>
@@ -54,11 +62,19 @@ class World extends React.Component {
                 </a>
                 {rows.map(i => (
                     <div key={i}>
-                        <a href={"/draw/" + this.state.imageskey + "/" + i}>
+                        <a
+                            href={
+                                "/draw/" +
+                                this.state.imageskey +
+                                "/" +
+                                (this.state.picindex - i + 1)
+                            }
+                        >
                             <img
                                 className="drawing"
                                 src={localStorage.getItem(
-                                    this.state.imageskey + i
+                                    this.state.imageskey +
+                                        (this.state.picindex - i + 1)
                                 )}
                             />
                         </a>
@@ -66,7 +82,7 @@ class World extends React.Component {
                 ))}
                 {!!this.props.users.length &&
                     this.props.users.map((user, index) => (
-                        <div key={index}>{user}</div>
+                        <div key={index}>{user.name}</div>
                     ))}
             </div>
         );

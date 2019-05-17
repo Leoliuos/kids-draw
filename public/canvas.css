@@ -37,6 +37,20 @@ body {
     z-index: 2;
 }
 
+#tools {
+    position: absolute;
+    top: -100vw;
+    left: 0;
+    background-color: rgba(100, 100, 100, 0.5);
+}
+
+#tools.showtools {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: top 1.5s;
+}
+
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

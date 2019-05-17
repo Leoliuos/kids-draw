@@ -16,8 +16,8 @@ CREATE TABLE subusers(
     password VARCHAR(60),
     type INTEGER,
     icon INTEGER,
-    imageskey VARCHAR(20),
-    friendshipkey VARCHAR(30) UNIQUE,
+    imageskey VARCHAR(40),
+    friendshipkey VARCHAR(60) UNIQUE,
     picindex INTEGER,
     userid INTEGER REFERENCES users(id) NOT NULL
 );
@@ -29,6 +29,8 @@ CREATE TABLE friendships(
     requesterid INTEGER NOT NULL,
     password VARCHAR(60) NOT NULL,
     receiverid INTEGER,
+    receivername VARCHAR(250),
+    requestername VARCHAR(250),
     accepted BOOLEAN,
     uniqcode VARCHAR(250) UNIQUE
 );

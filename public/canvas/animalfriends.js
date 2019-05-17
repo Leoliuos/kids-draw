@@ -1,11 +1,14 @@
 (function() {
-    changetheme = localStorage.getItem("drawtheme");
     var theme = "forest";
-    if (changetheme === "circus") {
+
+    var imageindex = document.location.pathname.split("/")[3];
+
+    if (parseInt(imageindex) % 3 === 0) {
         theme = "circus";
-    } else if (changetheme === "autumn") {
+    } else if (parseInt(imageindex) % 3 === 1) {
         theme = "autumn";
     }
+
     var bg = document.getElementById("bg");
     bg.classList.add(theme);
 

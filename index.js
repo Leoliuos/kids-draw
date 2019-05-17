@@ -235,8 +235,8 @@ app.post("/subregister", async (req, res) => {
                     const passw = await bc.hashPassword(req.body.passw);
                     password = passw;
                 }
-                const imageskey = uidSafe.sync(20);
-                const friendshipkey = uidSafe.sync(30);
+                const imageskey = uidSafe.sync(10);
+                const friendshipkey = uidSafe.sync(15);
                 const returnid = await db.createsubUser(
                     req.body.first,
                     password,
@@ -471,12 +471,16 @@ app.post("/friends/enterkey", async (req, res) => {
             if (req.body.id == keycheck.rows[0].id) {
                 throw "users are the same one";
             }
-            // receiverid, uniqcode, requesterid, password, true
+            const reqname = await db.findsubusers(req.body.id);
+            const recname = await db.findsubusers(keycheck.rows[0].id);
+            // receiverid, uniqcode, requesterid, password, true, receivername, requestername
             const friendconnection = await db.makefriendconnection(
                 req.body.id,
                 uniqcode,
                 keycheck.rows[0].id,
-                passwordcheck.rows[0].password
+                passwordcheck.rows[0].password,
+                recname.rows[0].firstname,
+                reqname.rows[0].firstname
             );
             res.send("success");
         } catch (err) {
@@ -529,17 +533,23 @@ io.on("connection", function(socket) {
                     if (results.rows[o].requesterid != null) {
                         io.to(onlineSockets[results.rows[o].requesterid]).emit(
                             "userJoined",
-                            userId
+                            { id: userId, name: results.rows[o].receivername }
                         );
-                        friends.push(results.rows[o].requesterid);
+                        friends.push({
+                            id: results.rows[o].requesterid,
+                            name: results.rows[o].requestername
+                        });
                     }
                 } else if (results.rows[o].requesterid == userId) {
                     if (results.rows[o].receiverid != null) {
                         io.to(onlineSockets[results.rows[o].receiverid]).emit(
                             "userJoined",
-                            userId
+                            { id: userId, name: results.rows[o].requestername }
                         );
-                        friends.push(results.rows[o].receiverid);
+                        friends.push({
+                            id: results.rows[o].receiverid,
+                            name: results.rows[o].receivername
+                        });
                     }
                 }
             }
@@ -555,14 +565,14 @@ io.on("connection", function(socket) {
                     if (results.rows[o].requesterid != undefined) {
                         io.to(onlineSockets[results.rows[o].requesterid]).emit(
                             "userLeft",
-                            userId
+                            { id: userId, name: results.rows[o].requestername }
                         );
                     }
                 } else if (results.rows[o].requesterid === userId) {
                     if (results.rows[o].receiverid != undefined) {
                         io.to(onlineSockets[results.rows[o].receiverid]).emit(
                             "userLeft",
-                            userId
+                            { id: userId, name: results.rows[o].receivername }
                         );
                     }
                 }

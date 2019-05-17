@@ -45,6 +45,17 @@
         "#b9c8f4",
         "#dce3f9"
     ];
+    // brush
+    var brushshadesblue = [
+        "rgba(65,105,225,0.2)",
+        "rgba(82,118,227,0.2)",
+        "rgba(99,132,230,0.2)",
+        "rgba(116,145,233,0.2)",
+        "rgba(134,159,235,0.2)",
+        "rgba(151,173,238,0.2)",
+        "rgba(185,200,244,0.1)",
+        "rgba(220,227,249,0.1)"
+    ];
 
     // these are shades for black ballpoint pen
     var ballpointshadesblack = [
@@ -56,6 +67,17 @@
         "#606060",
         "#888888",
         "#B0B0B0"
+    ];
+    // brush
+    var brushpointshadesblack = [
+        "rgba(0,0,0,0.2)",
+        "rgba(24,24,24,0.2)",
+        "rgba(48,48,48,0.2)",
+        "rgba(64,64,64,0.2)",
+        "rgba(80,80,80,0.1)",
+        "rgba(96,96,96,0.1)",
+        "rgba(136,136,136,0.1)",
+        "rgba(176,176,176,0.1)"
     ];
 
     // these are shades for red ballpoint pen
@@ -69,6 +91,18 @@
         "#ed7068",
         "#ef837c"
     ];
+
+    var brushshadesred = [
+        "rgba(255,40,25,0.2)",
+        "rgba(242,42,29,0.2)",
+        "rgba(242,51,38,0.2)",
+        "rgba(242,69,58,0.2)",
+        "rgba(242,82,72,0.1)",
+        "rgba(239,95,86,0.1)",
+        "rgba(237,112,104,0.1)",
+        "rgba(239,131,124,0.1)"
+    ];
+
     // these are shades for green ballpoint pen
     var ballpointshadesgreen = [
         "#00d60d",
@@ -80,10 +114,219 @@
         "#4ce857",
         "#61ed6b"
     ];
+    // brush
+    var brushshadesgreen = [
+        "rgba(0,241,13,0.2)",
+        "rgba(6,216,19,0.2)",
+        "rgba(13,221,26,0.2)",
+        "rgba(22,226,35,0.2)",
+        "rgba(36,229,49,0.2)",
+        "rgba(52,229,64,0.1)",
+        "rgba(76,232,87,0.1)",
+        "rgba(97,237,107,0.1)"
+    ];
 
-    var ballpointshades = ballpointshadesgreen;
+    // these are shades for white ballpoint pen
+    var ballpointshadeswhite = [
+        "#FFFFFF",
+        "#FFFFFF",
+        "#FFFFFF",
+        "#FFFFFF",
+        "#FFFFFF",
+        "#FFFFFF",
+        "#FFFFFF",
+        "#FFFFFF"
+    ];
+    // brush
+    var brushpointshadeswhite = [
+        "rgba(255,255,255,0.2)",
+        "rgba(255,255,255,0.2)",
+        "rgba(255,255,255,0.2)",
+        "rgba(255,255,255,0.1)",
+        "rgba(255,255,255,0.1)",
+        "rgba(255,255,255,0.05)",
+        "rgba(255,255,255,0.05)",
+        "rgba(255,255,255,0.01)"
+    ];
+
+    var ballpointshades = ballpointshadesblack;
 
     var mousecoordMoved = [0, 0];
+
+    // TOOLS // TOOLS // TOOLS
+
+    var pen1 = document.getElementById("tool-pen1");
+    var pen2 = document.getElementById("tool-pen2");
+    var pen3 = document.getElementById("tool-pen3");
+    var pen4 = document.getElementById("tool-pen4");
+    var pen5 = document.getElementById("tool-pen5");
+    var brush1 = document.getElementById("tool-brush1");
+    var brush2 = document.getElementById("tool-brush2");
+    var brush3 = document.getElementById("tool-brush3");
+    var brush4 = document.getElementById("tool-brush4");
+    var brush5 = document.getElementById("tool-brush5");
+    var pastel1 = document.getElementById("tool-pastel1");
+    var pastel2 = document.getElementById("tool-pastel2");
+    var pastel3 = document.getElementById("tool-pastel3");
+    var pastel4 = document.getElementById("tool-pastel4");
+    var pastel5 = document.getElementById("tool-pastel5");
+    var pastel6 = document.getElementById("tool-pastel6");
+    var pastel7 = document.getElementById("tool-pastel7");
+    var pastel8 = document.getElementById("tool-pastel8");
+    var eraser1 = document.getElementById("tool-eraser1");
+    var eraser2 = document.getElementById("tool-eraser2");
+    var bell = document.getElementById("tool-bell");
+
+    var toolbox = document.getElementById("tools");
+
+    var brush = 1;
+    var blocksize = 0;
+
+    pen1.addEventListener("click", function(event) {
+        pens();
+        ballpointshades = ballpointshadesblack;
+    });
+
+    pen2.addEventListener("click", function(event) {
+        pens();
+        ballpointshades = ballpointshadesred;
+    });
+
+    pen3.addEventListener("click", function(event) {
+        pens();
+        ballpointshades = ballpointshadesgreen;
+    });
+
+    pen4.addEventListener("click", function(event) {
+        pens();
+        ballpointshades = ballpointshadesblue;
+    });
+
+    pen5.addEventListener("click", function(event) {
+        pens();
+        ballpointshades = ballpointshadeswhite;
+    });
+
+    brush1.addEventListener("click", function(event) {
+        brushes();
+        ballpointshades = brushpointshadesblack;
+    });
+
+    brush2.addEventListener("click", function(event) {
+        brushes();
+        ballpointshades = brushshadesred;
+    });
+
+    brush3.addEventListener("click", function(event) {
+        brushes();
+        ballpointshades = brushshadesgreen;
+    });
+
+    brush4.addEventListener("click", function(event) {
+        brushes();
+        ballpointshades = brushshadesblue;
+    });
+
+    brush5.addEventListener("click", function(event) {
+        brushes();
+        ballpointshades = brushshadeswhite;
+    });
+
+    pastel1.addEventListener("click", function(event) {
+        pastels();
+        ballpointshades = ballpointshadesblack;
+    });
+
+    pastel2.addEventListener("click", function(event) {
+        pastels();
+        ballpointshades = ballpointshadesred;
+    });
+
+    pastel3.addEventListener("click", function(event) {
+        pastels();
+        ballpointshades = ballpointshadesgreen;
+    });
+
+    pastel4.addEventListener("click", function(event) {
+        pastels();
+        ballpointshades = ballpointshadesblue;
+    });
+
+    pastel5.addEventListener("click", function(event) {
+        pastels();
+        ballpointshades = ballpointshadeswhite;
+    });
+
+    pastel6.addEventListener("click", function(event) {
+        pastels();
+        ballpointshades = ballpointshadeswhite;
+    });
+
+    pastel7.addEventListener("click", function(event) {
+        pastels();
+        ballpointshades = ballpointshadeswhite;
+    });
+
+    pastel8.addEventListener("click", function(event) {
+        pastels();
+        ballpointshades = ballpointshadeswhite;
+    });
+
+    function pastels() {
+        brush = 4;
+        blocksize = 2;
+        toolbox.classList.remove("showtools");
+    }
+
+    function brushes() {
+        brush = 3;
+        blocksize = 0;
+        toolbox.classList.remove("showtools");
+    }
+
+    function pens() {
+        brush = 1;
+        blocksize = 0;
+        toolbox.classList.remove("showtools");
+    }
+
+    eraser1.addEventListener("click", function(event) {
+        brush = 4;
+        blocksize = 3;
+        ballpointshades = ballpointshadeswhite;
+        toolbox.classList.remove("showtools");
+    });
+
+    eraser2.addEventListener("click", function(event) {
+        brush = 5;
+        blocksize = 6;
+        ballpointshades = ballpointshadeswhite;
+        toolbox.classList.remove("showtools");
+    });
+
+    bell.addEventListener("click", function(event) {
+        var endtimeout = setTimeout(endNow, 2000);
+    });
+
+    function endNow() {
+        // load page
+        window.location.href = "../view";
+    }
+
+    // TOOLS // TOOLS // TOOLS
+
+    document.addEventListener("mousedown", function(event) {
+        if (event.target.id == "") {
+            toolbox.classList.add("showtools");
+        }
+    });
+
+    document.addEventListener("touchstart", function(event) {
+        event.preventDefault();
+        if (event.target.id == "") {
+            toolbox.classList.add("showtools");
+        }
+    });
 
     c.addEventListener("mousedown", function(event) {
         touchFunction(event, event);
@@ -196,16 +439,21 @@
             // seemed like a good zero state in this case but could be anything, just a value to clamp lowest values to
             var bigwidth =
                 3 -
-                Math.min(Math.max(vectorlen - 1.4142135623730951, 0), 6) / 2;
+                Math.min(Math.max(vectorlen - 1.4142135623730951, 0), 6) / 2 +
+                blocksize;
             // smooths size change per frame 1/4 on the new pressure & penpressure :
-            bigwidth = Math.min((bigwidth + lastbigwidth * 3) / 4, penpressure);
+            bigwidth = Math.min(
+                ((bigwidth + lastbigwidth * 3) / 4) * brush,
+                penpressure * brush + blocksize
+            );
             var smallwidth =
                 1.75 -
-                Math.min(Math.max(vectorlen - 1.4142135623730951, 0), 2) / 2;
+                Math.min(Math.max(vectorlen - 1.4142135623730951, 0), 2) / 2 +
+                blocksize;
             // smooths size change per frame 1/3 on the new pressure & penpressure :
             smallwidth = Math.min(
                 (smallwidth + lastsmallwidth * 2) / 3,
-                penpressure
+                penpressure + blocksize
             );
             lastbigwidth = bigwidth;
             lastsmallwidth = smallwidth;
