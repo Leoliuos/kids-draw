@@ -39,9 +39,11 @@ body {
 
 #tools {
     position: absolute;
+    width: 100vw;
+    height: 100vh;
     top: -100vw;
     left: 0;
-    background-color: rgba(100, 100, 100, 0.5);
+    background-color: rgba(255, 255, 255, 0.75);
 }
 
 #tools.showtools {
@@ -49,6 +51,71 @@ body {
     top: 0;
     left: 0;
     transition: top 1.5s;
+}
+
+.pens {
+    width: 22.5vw;
+}
+
+.psizes {
+    width: 5vw;
+    height: 5vw;
+    margin-top: 12vw;
+}
+
+#penscontainer {
+    width: 23vw;
+    display: inline-block;
+    float: left;
+    margin: 5vw;
+    margin-top: 10vw;
+}
+
+.brushes {
+    width: 25.5vw;
+}
+
+#brushescontainer {
+    width: 30vw;
+    display: inline-block;
+    float: left;
+    margin-left: 5vw;
+    margin-top: 10vw;
+}
+
+.chalks {
+    width: 11.5vw;
+}
+
+#chalkscontainer {
+    width: 15vw;
+    display: inline-block;
+    float: left;
+    margin: 5vw;
+    margin-top: 10vw;
+}
+
+#misccontainer {
+    width: 25vw;
+    display: inline-block;
+    float: right;
+    margin-right: 5vw;
+    margin-top: 10vw;
+}
+
+#tool-eraser1 {
+    width: 12.5vw;
+}
+
+#tool-eraser1 {
+    width: 22.5vw;
+}
+
+#tool-bell {
+    width: 12.5vw;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 .noselect {

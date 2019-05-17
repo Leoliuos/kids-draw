@@ -19,7 +19,7 @@ class App extends React.Component {
         if (!userType) {
             return (
                 <div>
-                    <div>
+                    <div className="topbar">
                         <a href="/logout">Account Logout</a>
                     </div>
                     <Subusers />
@@ -28,7 +28,7 @@ class App extends React.Component {
         } else if (userType[0].userType === 1) {
             return (
                 <div>
-                    <div>
+                    <div className="topbar">
                         <a href="/logout">Account Logout</a>
                     </div>
                     <Master />
@@ -37,8 +37,8 @@ class App extends React.Component {
         } else if (userType[0].userType === 2) {
             return (
                 <div>
-                    <div>
-                        <a href="/logout">Account Logout</a>
+                    <div className="topbar">
+                        <a href="/">Logout</a>
                     </div>
                     <Parent />
                 </div>
@@ -46,6 +46,9 @@ class App extends React.Component {
         } else if (userType[0].userType === 3) {
             return (
                 <div>
+                    <div className="topbar">
+                        <a href="/">Logout</a>
+                    </div>
                     <World />
                 </div>
             );

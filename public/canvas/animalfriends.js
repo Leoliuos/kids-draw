@@ -121,7 +121,16 @@
     var i = 0;
     function movetoScreen() {
         characters[i].classList.add("destination");
-        nexttimeout = setTimeout(returnPosition, 3000);
+        if (
+            characters[i].id === "walker" ||
+            characters[i].id === "walker_alt" ||
+            characters[i].id === "fly"
+        ) {
+            nexttimeout = setTimeout(returnPosition, 13000);
+        } else {
+            nexttimeout = setTimeout(returnPosition, 3000);
+        }
+
         i++;
         if (i > characters.length - 1) {
             i = 0;

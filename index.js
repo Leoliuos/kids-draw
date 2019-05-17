@@ -365,6 +365,7 @@ app.get("/view", async (req, res) => {
         res.redirect("/");
     } else {
         // child goes to view from draw
+        res.redirect("/");
     }
 });
 

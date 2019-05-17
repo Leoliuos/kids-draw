@@ -10,7 +10,7 @@ body {
 }
 
 .welcomebox {
-    background-color: PaleGreen;
+    background: linear-gradient(#d5ff80, white);
     width: 60vw;
     margin-left: calc((100% - 60vw) / 2);
     height: auto;
@@ -93,6 +93,19 @@ a:hover {
     width: 150px;
     height: auto;
     margin: 1vw;
+    display: inline-block;
+    float: left;
+}
+
+.topbar {
+    width: 100vw;
+    height: auto;
+    background: linear-gradient(#d5ff80, white);
+    border-style: solid;
+    border-width: 1px;
+    border-color: green white green white;
+    border-radius: 0.5vw;
+    text-align: right;
 }
 
 .subuserboxC {
@@ -150,17 +163,25 @@ a:hover {
     width: 200px;
     height: 150px;
     background-color: white;
-    border: 1px solid green;
+    border-style: solid;
+    border-width: 1px;
+    border-color: green yellow green yellow;
+    border-radius: 0.5vw;
     margin: 15px;
     display: inline-block;
+    float: left;
 }
 
 .drawing {
     width: 200px;
     height: 150px;
-    border: 1px solid green;
+    border-style: solid;
+    border-width: 1px;
+    border-color: green yellow green yellow;
+    border-radius: 0.5vw;
     margin: 15px;
     display: inline-block;
+    float: left;
 }
 
 .friendshipbox {

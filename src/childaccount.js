@@ -22,6 +22,10 @@ class World extends React.Component {
             });
     }
     render() {
+        var rows = [],
+            i = 0,
+            len = this.state.picindex;
+        while (++i <= len) rows.push(i);
         if (!this.props.users) {
             return (
                 <div className="circus">
@@ -51,10 +55,6 @@ class World extends React.Component {
                 </div>
             );
         }
-        var rows = [],
-            i = 0,
-            len = this.state.picindex;
-        while (++i <= len) rows.push(i);
         return (
             <div className="circus">
                 <a href="/draw">

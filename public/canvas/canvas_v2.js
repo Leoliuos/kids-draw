@@ -1,6 +1,8 @@
 (function() {
     var c = document.getElementById("drawboard");
 
+    var dingsound = document.getElementById("ding");
+
     var userkey = document.location.pathname.split("/")[2];
     var imageindex = document.location.pathname.split("/")[3];
     var storagekey = userkey + imageindex;
@@ -48,13 +50,13 @@
     // brush
     var brushshadesblue = [
         "rgba(65,105,225,0.2)",
-        "rgba(82,118,227,0.2)",
-        "rgba(99,132,230,0.2)",
-        "rgba(116,145,233,0.2)",
-        "rgba(134,159,235,0.2)",
-        "rgba(151,173,238,0.2)",
-        "rgba(185,200,244,0.1)",
-        "rgba(220,227,249,0.1)"
+        "rgba(82,118,227,0.19)",
+        "rgba(99,132,230,0.18)",
+        "rgba(116,145,233,0.17)",
+        "rgba(134,159,235,0.15)",
+        "rgba(151,173,238,0.12)",
+        "rgba(185,200,244,0.10)",
+        "rgba(220,227,249,0.09)"
     ];
 
     // these are shades for black ballpoint pen
@@ -71,13 +73,13 @@
     // brush
     var brushpointshadesblack = [
         "rgba(0,0,0,0.2)",
-        "rgba(24,24,24,0.2)",
-        "rgba(48,48,48,0.2)",
-        "rgba(64,64,64,0.2)",
-        "rgba(80,80,80,0.1)",
-        "rgba(96,96,96,0.1)",
-        "rgba(136,136,136,0.1)",
-        "rgba(176,176,176,0.1)"
+        "rgba(24,24,24,0.19)",
+        "rgba(48,48,48,0.18)",
+        "rgba(64,64,64,0.17)",
+        "rgba(80,80,80,0.15)",
+        "rgba(96,96,96,0.12)",
+        "rgba(136,136,136,0.10)",
+        "rgba(176,176,176,0.09)"
     ];
 
     // these are shades for red ballpoint pen
@@ -94,13 +96,13 @@
 
     var brushshadesred = [
         "rgba(255,40,25,0.2)",
-        "rgba(242,42,29,0.2)",
-        "rgba(242,51,38,0.2)",
-        "rgba(242,69,58,0.2)",
-        "rgba(242,82,72,0.1)",
-        "rgba(239,95,86,0.1)",
-        "rgba(237,112,104,0.1)",
-        "rgba(239,131,124,0.1)"
+        "rgba(242,42,29,0.19)",
+        "rgba(242,51,38,0.18)",
+        "rgba(242,69,58,0.17)",
+        "rgba(242,82,72,0.15)",
+        "rgba(239,95,86,0.12)",
+        "rgba(237,112,104,0.10)",
+        "rgba(239,131,124,0.09)"
     ];
 
     // these are shades for green ballpoint pen
@@ -117,13 +119,13 @@
     // brush
     var brushshadesgreen = [
         "rgba(0,241,13,0.2)",
-        "rgba(6,216,19,0.2)",
-        "rgba(13,221,26,0.2)",
-        "rgba(22,226,35,0.2)",
-        "rgba(36,229,49,0.2)",
-        "rgba(52,229,64,0.1)",
-        "rgba(76,232,87,0.1)",
-        "rgba(97,237,107,0.1)"
+        "rgba(6,216,19,0.19)",
+        "rgba(13,221,26,0.18)",
+        "rgba(22,226,35,0.17)",
+        "rgba(36,229,49,0.15)",
+        "rgba(52,229,64,0.13)",
+        "rgba(76,232,87,0.10)",
+        "rgba(97,237,107,0.09)"
     ];
 
     // these are shades for white ballpoint pen
@@ -140,13 +142,13 @@
     // brush
     var brushpointshadeswhite = [
         "rgba(255,255,255,0.2)",
-        "rgba(255,255,255,0.2)",
-        "rgba(255,255,255,0.2)",
-        "rgba(255,255,255,0.1)",
-        "rgba(255,255,255,0.1)",
-        "rgba(255,255,255,0.05)",
-        "rgba(255,255,255,0.05)",
-        "rgba(255,255,255,0.01)"
+        "rgba(255,255,255,0.19)",
+        "rgba(255,255,255,0.18)",
+        "rgba(255,255,255,0.17)",
+        "rgba(255,255,255,0.15)",
+        "rgba(255,255,255,0.13)",
+        "rgba(255,255,255,0.10)",
+        "rgba(255,255,255,0.09)"
     ];
 
     var ballpointshades = ballpointshadesblack;
@@ -177,10 +179,16 @@
     var eraser2 = document.getElementById("tool-eraser2");
     var bell = document.getElementById("tool-bell");
 
+    var size1 = document.getElementById("tool-paintsize1");
+    var size2 = document.getElementById("tool-paintsize2");
+    var size3 = document.getElementById("tool-paintsize3");
+
     var toolbox = document.getElementById("tools");
 
     var brush = 1;
     var blocksize = 0;
+    var cap = "round";
+    var paintsize = 1;
 
     pen1.addEventListener("click", function(event) {
         pens();
@@ -272,22 +280,40 @@
         ballpointshades = ballpointshadeswhite;
     });
 
+    size1.addEventListener("click", function(event) {
+        paintsize = 1;
+        toolbox.classList.remove("showtools");
+    });
+
+    size2.addEventListener("click", function(event) {
+        paintsize = 2;
+        toolbox.classList.remove("showtools");
+    });
+
+    size3.addEventListener("click", function(event) {
+        paintsize = 3;
+        toolbox.classList.remove("showtools");
+    });
+
     function pastels() {
         brush = 4;
         blocksize = 2;
         toolbox.classList.remove("showtools");
+        cap = "butt";
     }
 
     function brushes() {
         brush = 3;
         blocksize = 0;
         toolbox.classList.remove("showtools");
+        cap = "round";
     }
 
     function pens() {
         brush = 1;
         blocksize = 0;
         toolbox.classList.remove("showtools");
+        cap = "round";
     }
 
     eraser1.addEventListener("click", function(event) {
@@ -295,6 +321,7 @@
         blocksize = 3;
         ballpointshades = ballpointshadeswhite;
         toolbox.classList.remove("showtools");
+        cap = "butt";
     });
 
     eraser2.addEventListener("click", function(event) {
@@ -302,15 +329,23 @@
         blocksize = 6;
         ballpointshades = ballpointshadeswhite;
         toolbox.classList.remove("showtools");
+        cap = "butt";
     });
 
+    var dingclicks = 0;
     bell.addEventListener("click", function(event) {
-        var endtimeout = setTimeout(endNow, 2000);
+        ding.play();
+        dingclicks++;
+        var endtimeout = setTimeout(endNow, 2500);
     });
 
     function endNow() {
         // load page
-        window.location.href = "../view";
+        if (dingclicks > 1) {
+            window.location.href = "/view";
+        } else {
+            dingclicks = 0;
+        }
     }
 
     // TOOLS // TOOLS // TOOLS
@@ -379,7 +414,7 @@
             ctx.moveTo(mousecoordMoved[0], mousecoordMoved[1]);
             ctx.lineTo(mousecoordMoved[0] + 1, mousecoordMoved[1] + 1);
             ctx.strokeStyle = ballpointshades[0];
-            ctx.lineCap = "round";
+            ctx.lineCap = cap;
             ctx.lineWidth = 3.5;
             ctx.stroke();
         }
@@ -438,35 +473,43 @@
             // 1.4142... is just a number that came up often while moving really slow with my mouse
             // seemed like a good zero state in this case but could be anything, just a value to clamp lowest values to
             var bigwidth =
-                3 -
-                Math.min(Math.max(vectorlen - 1.4142135623730951, 0), 6) / 2 +
-                blocksize;
+                (3 -
+                    (Math.min(Math.max(vectorlen - 1.4142135623730951, 0), 6) /
+                        2) *
+                        brush +
+                    blocksize) *
+                paintsize;
             // smooths size change per frame 1/4 on the new pressure & penpressure :
-            bigwidth = Math.min(
-                ((bigwidth + lastbigwidth * 3) / 4) * brush,
-                penpressure * brush + blocksize
-            );
+            bigwidth =
+                Math.min(
+                    ((bigwidth + lastbigwidth * 3) / 4) * brush,
+                    penpressure * brush + blocksize
+                ) * paintsize;
             var smallwidth =
-                1.75 -
-                Math.min(Math.max(vectorlen - 1.4142135623730951, 0), 2) / 2 +
-                blocksize;
+                (1.75 -
+                    (Math.min(Math.max(vectorlen - 1.4142135623730951, 0), 2) /
+                        2) *
+                        brush +
+                    blocksize) *
+                paintsize;
             // smooths size change per frame 1/3 on the new pressure & penpressure :
-            smallwidth = Math.min(
-                (smallwidth + lastsmallwidth * 2) / 3,
-                penpressure + blocksize
-            );
+            smallwidth =
+                Math.min(
+                    ((smallwidth + lastsmallwidth * 2) / 3) * brush,
+                    penpressure * brush + blocksize
+                ) * paintsize;
             lastbigwidth = bigwidth;
             lastsmallwidth = smallwidth;
             // END OF // LINE WIDTHS // LINE WIDTHS // LINE WIDTHS
 
-            // Royal blue shades by vector length
+            // shades by vector length
             var shadeselect = Math.min(
                 Math.round(vectorlen - 2),
                 ballpointshades.length - 1
             );
 
             ctx.strokeStyle = ballpointshades[shadeselect];
-            ctx.lineCap = "round";
+            ctx.lineCap = cap;
             ctx.lineWidth = bigwidth;
             ctx.stroke();
             ctx.beginPath();
@@ -478,7 +521,7 @@
             ctx.lineTo(mousecoord[0], mousecoord[1]);
             ctx.lineWidth = smallwidth;
             ctx.strokeStyle = ballpointshades[Math.max(shadeselect - 2, 0)];
-            ctx.lineCap = "round";
+            ctx.lineCap = cap;
             ctx.stroke();
             coordlastframe = [mousecoord[0], mousecoord[1]];
         } else {
