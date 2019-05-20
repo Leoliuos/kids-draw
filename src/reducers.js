@@ -67,5 +67,15 @@ export default function(state = {}, action) {
         };
     }
 
+    if (action.type == "GET_CHAT_MESSAGE") {
+        console.log("getmessage");
+        state = {
+            ...state,
+            getMessages: action.getMessages.map(user => {
+                return user;
+            })
+        };
+    }
+
     return state;
 }

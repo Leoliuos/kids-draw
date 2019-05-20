@@ -140,7 +140,7 @@
         "#FFFFFF"
     ];
     // brush
-    var brushpointshadeswhite = [
+    var brushshadeswhite = [
         "rgba(255,255,255,0.2)",
         "rgba(255,255,255,0.19)",
         "rgba(255,255,255,0.18)",
@@ -149,6 +149,87 @@
         "rgba(255,255,255,0.13)",
         "rgba(255,255,255,0.10)",
         "rgba(255,255,255,0.09)"
+    ];
+    // pastels
+    var pastelshadesred = [
+        "rgba(238,32,77,1)",
+        "rgba(238,32,77,0.19)",
+        "rgba(238,32,77,0.18)",
+        "rgba(238,32,77,0.17)",
+        "rgba(238,32,77,0.15)",
+        "rgba(238,32,77,0.13)",
+        "rgba(238,32,77,0.10)",
+        "rgba(238,32,77,0.09)"
+    ];
+    var pastelshadesgreen = [
+        "rgba(0,128,10,1)",
+        "rgba(0,128,10,0.99)",
+        "rgba(0,128,10,0.98)",
+        "rgba(0,128,10,0.97)",
+        "rgba(0,128,10,0.95)",
+        "rgba(0,128,10,0.93)",
+        "rgba(0,128,10,0.90)",
+        "rgba(0,128,10,0.89)"
+    ];
+    var pastelshadesblue = [
+        "rgba(0,40,128,1)",
+        "rgba(0,40,128,0.99)",
+        "rgba(0,40,128,0.98)",
+        "rgba(0,40,128,0.97)",
+        "rgba(0,40,128,0.95)",
+        "rgba(0,40,128,0.93)",
+        "rgba(0,40,128,0.90)",
+        "rgba(0,40,128,0.89)"
+    ];
+    var pastelshadesgrey = [
+        "rgba(128,128,128,1)",
+        "rgba(128,128,128,0.99)",
+        "rgba(128,128,128,0.98)",
+        "rgba(128,128,128,0.97)",
+        "rgba(128,128,128,0.95)",
+        "rgba(128,128,128,0.93)",
+        "rgba(128,128,128,0.90)",
+        "rgba(128,128,128,0.89)"
+    ];
+    var pastelshadespink = [
+        "rgba(249,204,202,1)",
+        "rgba(249,204,202,0.99)",
+        "rgba(249,204,202,0.98)",
+        "rgba(249,204,202,0.97)",
+        "rgba(249,204,202,0.95)",
+        "rgba(249,204,202,0.93)",
+        "rgba(249,204,202,0.90)",
+        "rgba(249,204,202,0.89)"
+    ];
+    var pastelshadespurple = [
+        "rgba(160,32,40,1)",
+        "rgba(160,32,40,0.99)",
+        "rgba(160,32,40,0.98)",
+        "rgba(160,32,40,0.97)",
+        "rgba(160,32,40,0.95)",
+        "rgba(160,32,40,0.93)",
+        "rgba(160,32,40,0.90)",
+        "rgba(160,32,40,0.89)"
+    ];
+    var pastelshadesyellow = [
+        "rgba(255,255,0,1)",
+        "rgba(255,255,0,0.99)",
+        "rgba(255,255,0,0.98)",
+        "rgba(255,255,0,0.97)",
+        "rgba(255,255,0,0.95)",
+        "rgba(255,255,0,0.93)",
+        "rgba(255,255,0,0.90)",
+        "rgba(255,255,0,0.89)"
+    ];
+    var pastelshadeswhite = [
+        "rgba(255,255,255,1)",
+        "rgba(255,255,255,0.99)",
+        "rgba(255,255,255,0.98)",
+        "rgba(255,255,255,0.97)",
+        "rgba(255,255,255,0.95)",
+        "rgba(255,255,255,0.93)",
+        "rgba(255,255,255,0.90)",
+        "rgba(255,255,255,0.89)"
     ];
 
     var ballpointshades = ballpointshadesblack;
@@ -242,42 +323,42 @@
 
     pastel1.addEventListener("click", function(event) {
         pastels();
-        ballpointshades = ballpointshadesblack;
+        ballpointshades = pastelshadesred;
     });
 
     pastel2.addEventListener("click", function(event) {
         pastels();
-        ballpointshades = ballpointshadesred;
+        ballpointshades = pastelshadesgreen;
     });
 
     pastel3.addEventListener("click", function(event) {
         pastels();
-        ballpointshades = ballpointshadesgreen;
+        ballpointshades = pastelshadesblue;
     });
 
     pastel4.addEventListener("click", function(event) {
         pastels();
-        ballpointshades = ballpointshadesblue;
+        ballpointshades = pastelshadesgrey;
     });
 
     pastel5.addEventListener("click", function(event) {
         pastels();
-        ballpointshades = ballpointshadeswhite;
+        ballpointshades = pastelshadespink;
     });
 
     pastel6.addEventListener("click", function(event) {
         pastels();
-        ballpointshades = ballpointshadeswhite;
+        ballpointshades = pastelshadespurple;
     });
 
     pastel7.addEventListener("click", function(event) {
         pastels();
-        ballpointshades = ballpointshadeswhite;
+        ballpointshades = pastelshadesyellow;
     });
 
     pastel8.addEventListener("click", function(event) {
         pastels();
-        ballpointshades = ballpointshadeswhite;
+        ballpointshades = pastelshadeswhite;
     });
 
     size1.addEventListener("click", function(event) {

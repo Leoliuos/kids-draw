@@ -65,7 +65,9 @@ class Subusers extends React.Component {
                             onSubmit={e => this.handleInput(e)}
                         >
                             <label htmlFor={"login-user-" + user.id}>
-                                <div className="user">{user.firstname}</div>
+                                <div className="user">
+                                    <h1>{user.firstname}</h1>
+                                </div>
                             </label>
                             {user.password && (
                                 <div>

@@ -411,6 +411,22 @@ app.get("/draw/*", async (req, res) => {
     }
 });
 
+app.post("/autoupload", async (req, res) => {
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else {
+        console.log(req.body);
+    }
+});
+
+function checkUser(req, res, next) {
+    if (!req.session.userId) {
+        res.sendStatus(403);
+    } else {
+        next();
+    }
+}
+
 // FRIENDS
 
 app.post("/friends/generatekey", async (req, res) => {
@@ -589,7 +605,7 @@ io.on("connection", function(socket) {
             .sort()
             .join("");
         db.confirmfriendship(uniqcode).then(() => {
-            io.to(onlineSockets[data.target]).emit(data);
+            io.to(onlineSockets[data.target]).emit("getchatMessage", data);
         });
     });
 });

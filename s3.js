@@ -29,6 +29,7 @@ exports.deleteImage = function(queryurl) {
         });
 };
 
+var uidSafe = require("uid-safe");
 exports.upload = function(req, res, next) {
     if (!req.file) {
         console.log("s3Request: no req.file");
@@ -36,18 +37,18 @@ exports.upload = function(req, res, next) {
         next();
         return;
     }
-    const s3Request = client.put(req.file.filename, {
+    const s3Request = client.put(uidSafe(10), {
         "Content-Type": req.file.mimetype,
         "Content-Length": req.file.size,
         "x-amz-acl": "public-read"
     });
-    const stream = fs.createReadStream(req.file.path);
+    const stream = fs.createReadStream(req.body.data);
     stream.pipe(s3Request);
 
     s3Request.on("response", s3Response => {
         if (s3Response.statusCode == 200) {
             next();
-            fs.unlink(req.file.path, () => {});
+            fs.unlink(req.body, () => {});
         } else {
             console.log("s3Request: 500");
             res.sendStatus(500);

@@ -24,7 +24,9 @@ export default class Welcome extends React.Component {
                 <div className="blueLine" />
                 <div className="orangeLine" />
                 <div className="welcomebox">
-                    <h1>Welcome to Kids Draw !</h1>
+                    <h1>
+                        Welcome to <div>Kids Draw !</div>
+                    </h1>
                     {!this.state.hideinfo && (
                         <div
                             className="siteinfo"
@@ -35,7 +37,7 @@ export default class Welcome extends React.Component {
                                 drawing canvas aimed for parents and children.
                             </p>
                             <p>
-                                Your child can only see drawings from friend
+                                Your child can only send messages to friend
                                 contacts you have whitelisted.
                             </p>
                         </div>

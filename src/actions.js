@@ -31,7 +31,6 @@ export async function deleteSubUser(data) {
 }
 
 export async function onlineUsers(users) {
-    console.log(users);
     return {
         type: "ONLINE_USERS",
         users
@@ -39,8 +38,6 @@ export async function onlineUsers(users) {
 }
 
 export async function userJoined(user) {
-    console.log("ONLINE_USERS_ADD");
-
     return {
         type: "ONLINE_USERS_ADD",
         user
@@ -48,7 +45,6 @@ export async function userJoined(user) {
 }
 
 export async function userLeft(user) {
-    console.log("ONLINE_USERS_REMOVE");
     return {
         type: "ONLINE_USERS_REMOVE",
         user
@@ -58,6 +54,14 @@ export async function userLeft(user) {
 export async function chatMessage(message) {
     return {
         type: "SEND_CHAT_MESSAGE",
+        message
+    };
+}
+
+export async function getchatMessage(message) {
+    console.log("get chat action");
+    return {
+        type: "GET_CHAT_MESSAGE",
         message
     };
 }

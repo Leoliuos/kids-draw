@@ -24,20 +24,12 @@ export default class Master extends React.Component {
                 </div>
                 <div
                     className="menuselect"
-                    id="monitor"
-                    onClick={e => handleInput(e)}
-                >
-                    Monitor
-                </div>
-                <div
-                    className="menuselect"
                     id="settings"
                     onClick={e => handleInput(e)}
                 >
                     Settings
                 </div>
                 {this.state.menuopen == "friends" && <Friends />}
-                {this.state.menuopen == "monitor" && <Monitor />}
                 {this.state.menuopen == "settings" && <Settings />}
             </div>
         );

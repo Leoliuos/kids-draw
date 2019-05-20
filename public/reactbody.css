@@ -47,6 +47,87 @@ a:hover {
     text-decoration: underline;
 }
 
+.imageslist {
+    width: 85vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+}
+
+.usersonline {
+    width: 15vw;
+    height: 100vh;
+    position: absolute;
+    right: 0;
+}
+
+.useronline {
+    width: 15vw;
+    height: 5vw;
+    border-style: solid;
+    border-width: 1px;
+    border-color: green white green white;
+    border-radius: 1vw;
+    font-family: "Annie Use Your Telescope", cursive;
+    font-size: 3vw;
+    padding-left: 1vw;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: center;
+}
+
+.sendmessage {
+    width: 40vw;
+    height: 12vw;
+    position: absolute;
+    top: 10vw;
+    right: 15vw;
+    background-color: rgba(200, 255, 180, 0.6);
+    border-style: solid;
+    border-width: 1px;
+    border-color: green white green white;
+    border-radius: 1vw;
+}
+
+.sendx {
+    position: absolute;
+    right: 1vw;
+    top: 1vw;
+    font-size: 4vw;
+    font-family: "Annie Use Your Telescope", cursive;
+}
+
+.sendtext {
+    position: absolute;
+    left: 10%;
+    top: 1vw;
+    font-size: 4vw;
+    font-family: "Annie Use Your Telescope", cursive;
+}
+
+.sendmessage input {
+    left: 20%;
+    top: 45%;
+    width: 50%;
+    position: absolute;
+}
+
+.sendtextto {
+    position: absolute;
+    left: 30%;
+    top: 6vw;
+    font-size: 4vw;
+    font-family: "Annie Use Your Telescope", cursive;
+}
+
+.sendmessage button {
+    left: 70%;
+    top: 45%;
+    width: 10%;
+    position: absolute;
+}
+
 .infotext {
     text-align: center;
 }
@@ -84,9 +165,34 @@ a:hover {
     color: purple;
     font-family: "Annie Use Your Telescope", cursive;
     font-size: 2em;
-    background-color: white;
+    background-image: url("images/background_circus.jpg");
+    background-size: cover;
     overflow: hidden;
     margin-bottom: 5px;
+}
+
+.topmenu {
+    height: 5vw;
+}
+
+.menuselect {
+    display: inline-block;
+    width: 150px;
+    font-size: 2vw;
+    margin-left: 2vw;
+}
+
+.menuselect h1 {
+    color: white;
+    font-family: "Annie Use Your Telescope", cursive;
+    margin-bottom: 2vw;
+    font-size: 2vw;
+}
+
+.user h1 {
+    background-color: purple;
+    color: white;
+    font-size: 2vw;
 }
 
 .userbox {
@@ -279,7 +385,7 @@ p {
     width: 100vw;
     height: 5vw;
     background-color: yellow;
-    position: absolute;
+    position: fixed;
     top: 0;
     z-index: -100;
 }
@@ -288,7 +394,7 @@ p {
     width: 100vw;
     height: 5vw;
     background-color: lightblue;
-    position: absolute;
+    position: fixed;
     top: 10vw;
     z-index: -100;
 }
@@ -297,7 +403,7 @@ p {
     width: 100vw;
     height: 5vw;
     background-color: orange;
-    position: absolute;
+    position: fixed;
     top: 20vw;
     z-index: -100;
 }
