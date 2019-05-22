@@ -18,8 +18,14 @@ app.use(bodyParser.json());
 
 // COOKIE SESSION ////// COOKIE SESSION ////// COOKIE SESSION ////
 const cookieSession = require("cookie-session");
-const { cookieData } = require("./cookies");
-var secret = cookieData();
+let secret;
+if (process.env) {
+    secret = "";
+} else {
+    const { cookieData } = require("./cookies");
+    secret = cookieData();
+}
+
 const cookieSessionMiddleware = cookieSession({
     maxAge: 1000 * 60 * 60 * 24 * 14,
     secret: process.env.SESSION_SECRET || secret
