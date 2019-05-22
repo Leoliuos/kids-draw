@@ -20,10 +20,9 @@ app.use(bodyParser.json());
 const cookieSession = require("cookie-session");
 const { cookieData } = require("./cookies");
 var secret = cookieData();
-//secret = process.env.SESSION_SECRET;
 const cookieSessionMiddleware = cookieSession({
     maxAge: 1000 * 60 * 60 * 24 * 14,
-    secret: secret
+    secret: process.env.SESSION_SECRET || secret
 });
 app.use(cookieSessionMiddleware);
 
@@ -32,31 +31,10 @@ io.use(function(socket, next) {
 });
 // COOKIE SESSION ////// COOKIE SESSION ////// COOKIE SESSION ////
 
-var multer = require("multer");
 var uidSafe = require("uid-safe");
-var path = require("path");
 
-const s3 = require("./s3");
-
-const config = require("./config");
-
-var diskStorage = multer.diskStorage({
-    destination: function(req, file, callback) {
-        callback(null, __dirname + "/uploads");
-    },
-    filename: function(req, file, callback) {
-        uidSafe(24).then(function(uid) {
-            callback(null, uid + path.extname(file.originalname));
-        });
-    }
-});
-
-var uploader = multer({
-    storage: diskStorage,
-    limits: {
-        fileSize: 2097152
-    }
-});
+// removed s3 image upload as it didnt have that significant use in this app
+// If I still add small image sharing feature I will most likely use sockets to shara data
 
 app.use(csurf());
 
@@ -71,7 +49,8 @@ if (process.env.NODE_ENV != "production") {
     app.use(
         "/bundle.js",
         require("http-proxy-middleware")({
-            target: "http://localhost:8081/"
+            target:
+                "http://localhost:8081/" || "https://kids-draw.herokuapp.com/"
         })
     );
 } else {
@@ -408,14 +387,6 @@ app.get("/draw/*", async (req, res) => {
     } else {
         res.set("X-Frame-Options", "deny");
         res.sendFile(__dirname + "/canvas.html");
-    }
-});
-
-app.post("/autoupload", async (req, res) => {
-    if (!req.session.userId) {
-        res.redirect("/welcome");
-    } else {
-        console.log(req.body);
     }
 });
 
