@@ -1,8 +1,15 @@
 var spicedPg = require("spiced-pg");
 
 var db;
-const { localdataBase } = require("../secret");
-db = spicedPg(process.env.DATABASE_URL || localdataBase());
+
+let localdatabase;
+if (process.env) {
+    localdatabase = "";
+} else {
+    const { localdataBase } = require("../secret");
+    localdatabase = localdataBase();
+}
+db = spicedPg(process.env.DATABASE_URL || localdatabase);
 
 exports.createUser = function createUser(first, last, email, passw) {
     let q = `INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4) RETURNING id`;
