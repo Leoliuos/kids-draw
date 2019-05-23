@@ -3,7 +3,7 @@ var spicedPg = require("spiced-pg");
 var db;
 
 let localdatabase;
-if (process.env) {
+if (process.env.DATABASE_URL) {
     localdatabase = "";
 } else {
     const { localdataBase } = require("../secret");

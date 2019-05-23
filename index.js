@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 // COOKIE SESSION ////// COOKIE SESSION ////// COOKIE SESSION ////
 const cookieSession = require("cookie-session");
 let secret;
-if (process.env) {
+if (process.env.SESSION_SECRET) {
     secret = "";
 } else {
     const { cookieData } = require("./cookies");

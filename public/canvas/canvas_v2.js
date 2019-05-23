@@ -152,74 +152,74 @@
     ];
     // pastels
     var pastelshadesred = [
-        "rgba(238,32,77,1)",
-        "rgba(238,32,77,0.19)",
-        "rgba(238,32,77,0.18)",
-        "rgba(238,32,77,0.17)",
-        "rgba(238,32,77,0.15)",
-        "rgba(238,32,77,0.13)",
-        "rgba(238,32,77,0.10)",
-        "rgba(238,32,77,0.09)"
+        "rgba(255,102,102,1)",
+        "rgba(255,102,102,0.99)",
+        "rgba(255,102,102,0.98)",
+        "rgba(255,102,102,0.97)",
+        "rgba(255,102,102,0.95)",
+        "rgba(255,102,102,0.93)",
+        "rgba(255,102,102,0.90)",
+        "rgba(255,102,102,0.89)"
     ];
     var pastelshadesgreen = [
-        "rgba(0,128,10,1)",
-        "rgba(0,128,10,0.99)",
-        "rgba(0,128,10,0.98)",
-        "rgba(0,128,10,0.97)",
-        "rgba(0,128,10,0.95)",
-        "rgba(0,128,10,0.93)",
-        "rgba(0,128,10,0.90)",
-        "rgba(0,128,10,0.89)"
+        "rgba(153,255,102,1)",
+        "rgba(153,255,102,0.99)",
+        "rgba(153,255,102,0.98)",
+        "rgba(153,255,102,0.97)",
+        "rgba(153,255,102,0.95)",
+        "rgba(153,255,102,0.93)",
+        "rgba(153,255,102,0.90)",
+        "rgba(153,255,102,0.89)"
     ];
     var pastelshadesblue = [
-        "rgba(0,40,128,1)",
-        "rgba(0,40,128,0.99)",
-        "rgba(0,40,128,0.98)",
-        "rgba(0,40,128,0.97)",
-        "rgba(0,40,128,0.95)",
-        "rgba(0,40,128,0.93)",
-        "rgba(0,40,128,0.90)",
-        "rgba(0,40,128,0.89)"
+        "rgba(153,204,255,1)",
+        "rgba(153,204,255,0.99)",
+        "rgba(153,204,255,0.98)",
+        "rgba(153,204,255,0.97)",
+        "rgba(153,204,255,0.95)",
+        "rgba(153,204,255,0.93)",
+        "rgba(153,204,255,0.90)",
+        "rgba(153,204,255,0.89)"
     ];
     var pastelshadesgrey = [
-        "rgba(128,128,128,1)",
-        "rgba(128,128,128,0.99)",
-        "rgba(128,128,128,0.98)",
-        "rgba(128,128,128,0.97)",
-        "rgba(128,128,128,0.95)",
-        "rgba(128,128,128,0.93)",
-        "rgba(128,128,128,0.90)",
-        "rgba(128,128,128,0.89)"
+        "rgba(205,205,177,1)",
+        "rgba(205,205,177,0.99)",
+        "rgba(205,205,177,0.98)",
+        "rgba(205,205,177,0.97)",
+        "rgba(205,205,177,0.95)",
+        "rgba(205,205,177,0.93)",
+        "rgba(205,205,177,0.90)",
+        "rgba(205,205,177,0.89)"
     ];
     var pastelshadespink = [
-        "rgba(249,204,202,1)",
-        "rgba(249,204,202,0.99)",
-        "rgba(249,204,202,0.98)",
-        "rgba(249,204,202,0.97)",
-        "rgba(249,204,202,0.95)",
-        "rgba(249,204,202,0.93)",
-        "rgba(249,204,202,0.90)",
-        "rgba(249,204,202,0.89)"
+        "rgba(255,179,217,1)",
+        "rgba(255,179,217,0.99)",
+        "rgba(255,179,217,0.98)",
+        "rgba(255,179,217,0.97)",
+        "rgba(255,179,217,0.95)",
+        "rgba(255,179,217,0.93)",
+        "rgba(255,179,217,0.90)",
+        "rgba(255,179,217,0.89)"
     ];
     var pastelshadespurple = [
-        "rgba(160,32,40,1)",
-        "rgba(160,32,40,0.99)",
-        "rgba(160,32,40,0.98)",
-        "rgba(160,32,40,0.97)",
-        "rgba(160,32,40,0.95)",
-        "rgba(160,32,40,0.93)",
-        "rgba(160,32,40,0.90)",
-        "rgba(160,32,40,0.89)"
+        "rgba(191,128,255,1)",
+        "rgba(191,128,255,0.99)",
+        "rgba(191,128,255,0.98)",
+        "rgba(191,128,255,0.97)",
+        "rgba(191,128,255,0.95)",
+        "rgba(191,128,255,0.93)",
+        "rgba(191,128,255,0.90)",
+        "rgba(191,128,255,0.89)"
     ];
     var pastelshadesyellow = [
-        "rgba(255,255,0,1)",
-        "rgba(255,255,0,0.99)",
-        "rgba(255,255,0,0.98)",
-        "rgba(255,255,0,0.97)",
-        "rgba(255,255,0,0.95)",
-        "rgba(255,255,0,0.93)",
-        "rgba(255,255,0,0.90)",
-        "rgba(255,255,0,0.89)"
+        "rgba(255,255,128,1)",
+        "rgba(255,255,128,0.99)",
+        "rgba(255,255,128,0.98)",
+        "rgba(255,255,128,0.97)",
+        "rgba(255,255,128,0.95)",
+        "rgba(255,255,128,0.93)",
+        "rgba(255,255,128,0.90)",
+        "rgba(255,255,128,0.89)"
     ];
     var pastelshadeswhite = [
         "rgba(255,255,255,1)",
@@ -545,7 +545,11 @@
 
             // START OF // LINE WIDTHS // LINE WIDTHS // LINE WIDTHS
             // pen pressure drops or ink runs down, either way, pressure falls each frame, Min value 1.5
-            penpressure = Math.max(penpressure - 0.05, 1.5);
+            var brushtypemult = brush * paintsize;
+            penpressure = Math.max(
+                penpressure - 0.05 * brushtypemult,
+                1.5 * brushtypemult + blocksize
+            );
             // mouse movement vector length per frame. Using it to determine line size. Faster = thinner line
             var vectorlen = Math.hypot(
                 Math.abs(mousecoord[0] - coordlastframe[0]),
@@ -554,31 +558,29 @@
             // 1.4142... is just a number that came up often while moving really slow with my mouse
             // seemed like a good zero state in this case but could be anything, just a value to clamp lowest values to
             var bigwidth =
-                (3 -
+                (3 * brushtypemult -
                     (Math.min(Math.max(vectorlen - 1.4142135623730951, 0), 6) /
                         2) *
                         brush +
                     blocksize) *
                 paintsize;
             // smooths size change per frame 1/4 on the new pressure & penpressure :
-            bigwidth =
-                Math.min(
-                    ((bigwidth + lastbigwidth * 3) / 4) * brush,
-                    penpressure * brush + blocksize
-                ) * paintsize;
+            bigwidth = Math.min(
+                (bigwidth + lastbigwidth * 3) / 4,
+                penpressure * brush + blocksize
+            );
             var smallwidth =
-                (1.75 -
+                (1.75 * brushtypemult -
                     (Math.min(Math.max(vectorlen - 1.4142135623730951, 0), 2) /
                         2) *
                         brush +
                     blocksize) *
                 paintsize;
             // smooths size change per frame 1/3 on the new pressure & penpressure :
-            smallwidth =
-                Math.min(
-                    ((smallwidth + lastsmallwidth * 2) / 3) * brush,
-                    penpressure * brush + blocksize
-                ) * paintsize;
+            smallwidth = Math.min(
+                (smallwidth + lastsmallwidth * 2) / 3,
+                penpressure * brush + blocksize
+            );
             lastbigwidth = bigwidth;
             lastsmallwidth = smallwidth;
             // END OF // LINE WIDTHS // LINE WIDTHS // LINE WIDTHS
